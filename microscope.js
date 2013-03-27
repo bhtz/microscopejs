@@ -102,12 +102,13 @@ Array.prototype.contains = function(obj) {
     return false;
 }
 
-function isValidProperty(property){
+function isValidPropertyType(type){
     var validateType = ['STRING', 'TEXT', 'DATE', 'BOOLEAN', 'INTEGER', 'FLOAT'];
-    if(validateType.contains(property.type))
+    if(validateType.contains(type)){
         return true;
-    else
+    }else{
         return false;
+    }
 };
 
 function getModel(args){
@@ -119,7 +120,7 @@ function getModel(args){
         var name = property[0];
         var type = property[1].toUpperCase();
 
-        if(isValidProperty(property)){
+        if(isValidPropertyType(type)){
             model.properties.push({ name: name, type: type });    
         }
 		else{
