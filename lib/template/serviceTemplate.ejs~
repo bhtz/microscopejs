@@ -1,0 +1,54 @@
+var <%= model.name %>Service = module.exports = function() {
+
+    var self = this;
+
+    // Dependencies
+    var dbContext = require('../models/dbContext')();
+
+    // get <%= model.name %> by id
+    self.get = function(<%= model.name %>Id, next) {
+        dbContext.<%= model.name %>s.find(<%= model.name %>Id).success(function(<%= model.name %>) {
+            next(<%= model.name %>);
+        });
+    };
+
+    // get all <%= model.name %>
+    self.getAll = function(next) {
+        dbContext.<%= model.name %>s.findAll({order: 'id DESC'}).success(function(<%= model.name %>s) {
+            next(<%= model.name %>s);
+        });
+    };
+
+    // save <%= model.name %>
+    self.save = function(<%= model.name %>, next) {
+        var <%= model.name %> = dbContext.<%= model.name %>s.build(<%= model.name %>);
+        var errors = <%= model.name %>.validate();
+        if(errors){
+            next({message: error});
+        }
+        <%= model.name %>.save().success(function(<%= model.name %>) {
+            next(<%= model.name %>);
+        }).error(function(error) {
+            next({message: error});
+        });
+    };
+
+    // edit a <%= model.name %>
+    self.update = function(<%= model.name %>, next) {
+        <%= model.name %>.save(attributes).success(function (Updated<%= model.name %>) {
+            next(Updated<%= model.name %>);
+        });
+    };
+
+    // delete an <%= model.name %>
+    self.remove = function(<%= model.name %>Id, next) {
+    	console.log('le ID en params : '+<%= model.name %>Id);     
+        dbContext.<%= model.name %>s.find(<%= model.name %>Id).success(function(<%= model.name %>) {
+			<%= model.name %>.destroy().complete(function(error) {
+				next(error);
+			});
+        })
+    };
+
+    return self;
+};

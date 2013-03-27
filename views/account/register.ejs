@@ -1,0 +1,35 @@
+<div class="wrapper">
+    <hgroup class="title">
+    <h1>Register.</h1>
+    <h2>Create a new account.</h2>
+</hgroup>
+
+<p class="message-info">
+    Passwords must be at least 6 characters long.
+</p>
+
+<form action="/account/register" method="post">
+    <fieldset>
+        <legend>Registration Form</legend>
+        <ol>
+            <li>
+                <label>username</label>
+                <input type="text" id="username" name="username"/>
+            </li>
+            <li>
+                <label>email</label>
+                <input type="text" id="email" name="email"/>
+            </li>
+            <li>
+                <label>password</label>
+                <input type="password" id="password" name="password"/>
+            </li>
+            <li>
+                <label>confirmPassword</label>
+                <input type="password" id="confirmPassword" name="confirmPassword"/>
+            </li>
+        </ol>
+        <input type="submit" value="Register" class="metroButton"/>
+    </fieldset>
+</form>
+</div>

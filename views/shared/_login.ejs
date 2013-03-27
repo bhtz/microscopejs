@@ -1,0 +1,10 @@
+<% if(!req.user){ %>
+  
+  <a href="/account/login"><li>login</li></a>
+  
+<% }else { %>
+  
+  <a href="/account/changePassword/"><li><%- req.user.username %></li></a>
+  <a href="/account/logout"><li>logout</li></a>
+  
+<% } %>

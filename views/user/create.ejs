@@ -1,0 +1,22 @@
+﻿<h1>Create user</h1>
+<div style="width:500px;">
+	<form action="/user/create" method="post">
+		
+		<label>username</label><div>
+  <input type="text" id="username" name="username" value="<%= user.username %>"/>
+</div>
+
+<label>email</label><div>
+  <input type="text" id="email" name="email" value="<%= user.email %>"/>
+</div>
+
+<label>password</label><div>
+  <input type="text" id="password" name="password" value="<%= user.password %>"/>
+</div>
+
+
+    
+		<div class="space5"></div>
+		<input type="submit" value="create" class="metroButton"/>
+	</form>
+</div>

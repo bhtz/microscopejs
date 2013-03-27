@@ -1,0 +1,33 @@
+﻿<div style="text-align:center; width:500px; margin:auto;"> 
+  <h2>edit</h2> 
+ 
+  <fieldset> 
+    <legend> 
+      user 
+    </legend> 
+    <form action="/user/edit/" method="post"> 
+ 
+        <input type="hidden" name="id" value="<%= user.id %>" /> 
+		 
+        <label>username</label><div>
+  <input type="text" id="username" name="username" value="<%= user.username %>"/>
+</div>
+
+<label>email</label><div>
+  <input type="text" id="email" name="email" value="<%= user.email %>"/>
+</div>
+
+<label>password</label><div>
+  <input type="text" id="password" name="password" value="<%= user.password %>"/>
+</div>
+
+ 
+ 
+      <div class="space5"></div> 
+      <input type="submit" value="save" class="metroButton"/> 
+    </form> 
+ 
+  </fieldset> 
+ 
+  <a href="/user">back to list</a> 
+</div> 

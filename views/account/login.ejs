@@ -1,0 +1,29 @@
+<div class="wrapper">
+    <hgroup class="title">
+        <h1>Log in</h1>
+        <h2>Use this form to enter your user name and password.</h2>
+    </hgroup>
+
+<form action="/account/login" method="post">
+    <fieldset>
+        <legend>Log in Form</legend>
+        <ol>
+            <li>
+                <label>username</label>
+                <input type="text" id="username" name="username"/>
+            </li>
+            <li>
+                <label>password</label>
+                <input type="password" id="password" name="password"/>
+            </li>
+            <li>
+                -- checkboxfor persistent cookie here --
+            </li>
+        </ol>
+        <input type="submit" value="Log in" class="metroButton"/>
+    </fieldset>
+    <p>
+        <a href="/account/register" class="metroButton">Register</a> if you don't have an account.
+    </p>
+    </form>
+</div>

@@ -1,0 +1,15 @@
+<h1><%- title %></h1>        
+<% if (error === undefined) {%>
+    <p> We are so sorry.  Something has gone terribly awry.</p>
+<% }else{ %>
+    <p> You are seeing a stack trace because it is enabled in server.js for development mode.  To turn this off, modify server.js and set errorOptions.showStack to false.</p>
+<% } %>
+
+<% if (error === undefined) {%>
+<% }else{ %>
+    <h3> We have encountered an internal server error.</h3>
+    <p> We're really quite sorry.  I don't know how you got here, but there's really nothing to see.</p>
+<% } %>
+    <h3><%- "Internal Server Error: " + error.toString() %></h3>
+    <p><%- error.stack %></p>
+ 
