@@ -1,5 +1,6 @@
-var membership = module.exports = function (passport, LocalStrategy, dbContext) {
+var membership = module.exports = function (passport, LocalStrategy) {
 
+    var dbContext = require('../models/dbContext')();
     var bcrypt = require('bcrypt-nodejs');
 
     passport.serializeUser(function (user, done) {

@@ -9,12 +9,8 @@ var express = require('express')
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-// Initialize DbContext and synchronize with database
-var dbContext = require('./models/dbContext')();
-dbContext.sync();
-
 // initialize membership
-var membership = require('./middleware/membership')(passport, LocalStrategy, dbContext);
+var membership = require('./middleware/membership')(passport, LocalStrategy);
 
 var app = express();
 // configuration
@@ -59,14 +55,23 @@ app.configure('production', function () {
 });
 app.use(require('./middleware/errorHandler')(errorOptions));
 
-// Controller Routing
-// Enable your controllers here
-require('./controllers/homeController')(app);
-require('./controllers/accountController')(app);
 
-// Api Routing
-// Enable your apiControllers here
-//require('./api/userApiController')(app);
+/*
+* Initialize DbContext and synchronize with database.
+* Keep it here if you want auto synchronization with db,
+* or remove it and only use microscope command : 
+* node microscope.js db_sync
+*/
+//var dbContext = require('./models/dbContext')();
+//dbContext.sync();
+
+/*
+* Configure application routing here.
+* see ./middleware/routing.js.
+*/
+var routing = require('./middleware/routing')(app);
+routing.controllerRouting();
+routing.apiRouting();
 
 // Initialize application server 
 http.createServer(app).listen(app.get('port'), function(){
