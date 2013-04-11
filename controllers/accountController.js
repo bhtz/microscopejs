@@ -38,13 +38,10 @@ var accountController = module.exports = function (app) {
     // changePassword get
     app.post('/account/changePassword', function (req, res) {
 		if(req.body.newPassword == req.body.confirmNewPassword){
-			console.log('newpassword == confirmpassword');
 			userService.get(req.user.id, function(user){
 				if(bcrypt.compareSync(req.body.oldPassword, user.password)){
-					console.log('old password confirmed !');
 					user.password = bcrypt.hashSync(req.body.newPassword);
 					userService.update(user, function(updatedUser){
-						console.log('old password confirmed !');
 						res.redirect('/');
 					});
 				}
@@ -65,6 +62,7 @@ var accountController = module.exports = function (app) {
         if (req.body.password == req.body.confirmPassword) {
             userService.getByUsername(req.body.username, function (user) {
                 if (!user) {
+                    //TODO : async function + gen salt !
                     var hashedPassword = bcrypt.hashSync(req.body.password);
                     var user = {
                         username: req.body.username,

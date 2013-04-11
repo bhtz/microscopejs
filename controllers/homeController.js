@@ -1,23 +1,34 @@
 /**
- * home controller 
- * properties and actions
- */
-module.exports = function (app) {
+* HomeController class
+*/
+var HomeController = module.exports = (function () {
 
-    /*
-    * Dependencies
+    /**
+    * @param {app} - express app.
     */
-    //get this dependency to use filters.authorize attribute
-    var filters = require('../middleware/membershipFilters')();
+    function HomeController(app) {
+        this.app = app;
+        this.filters = require('../middleware/membershipFilters')();
+        this.Actions(this.app);
+    }
 
-    //index
-    app.get('/', function (req, res) {
-        console.log(req.user);
-        res.render('home/index');
-    });
+    /**
+    * Controller actions.
+    * @param {app}
+    */
+    HomeController.prototype.Actions = function (app) {
 
-    //about
-    app.get('/home/docs', function (req, res) {
-        res.render('home/docs');
-    });
-}
+        //index
+        app.get('/', function (req, res) {
+            console.log(req.user);
+            res.render('home/index');
+        });
+
+        //about
+        app.get('/home/docs', function (req, res) {
+            res.render('home/docs');
+        });
+    };
+
+    return HomeController;
+})();
