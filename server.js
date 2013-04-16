@@ -4,15 +4,16 @@
 var express = require('express')
   , http = require('http')
   , path = require('path')
-  , partials = require('express-partials');
+  , partials = require('express-partials')
+  , Routing = require('./middleware/routing')
+  , Membership = require('./middleware/membership');
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-
-// initialize membership
-var membership = require('./middleware/membership')(passport, LocalStrategy);
+var membership = new Membership(passport, LocalStrategy);
 
 var app = express();
+
 // configuration
 app.configure(function () {
     app.set('port', process.env.PORT || 3000);
@@ -55,25 +56,23 @@ app.configure('production', function () {
 });
 app.use(require('./middleware/errorHandler')(errorOptions));
 
-
 /*
 * Initialize DbContext and synchronize with database.
 * Keep it here if you want auto synchronization with db,
 * or remove it and only use microscope command : 
 * node microscope.js db_sync
 */
-//var dbContext = require('./models/dbContext')();
+//var DbContext = require('./models/dbContext');
+//var dbContext = new DbContext();
 //dbContext.sync();
 
 /*
 * Configure application routing here.
 * see ./middleware/routing.js.
 */
-var routing = require('./middleware/routing')(app);
-routing.controllerRouting();
-routing.apiRouting();
+var routing = new Routing(app);
 
-// Initialize application server 
+// Initialize application server
 http.createServer(app).listen(app.get('port'), function(){
   console.log("microscope application listening on port " + app.get('port'));
 });

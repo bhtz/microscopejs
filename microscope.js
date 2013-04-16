@@ -6,12 +6,12 @@ var ejs = require('ejs');
 var fs = require('fs');
 var colors = require('colors');
 
-var modelGenerator = require('./lib/modelGenerator')();
-var scaffoldingGenerator = require('./lib/scaffoldingGenerator')();
-var mobileScaffoldingGenerator = require('./lib/mobileScaffoldingGenerator')();
-var controllerGenerator = require('./lib/controllerGenerator')();
-var apiControllerGenerator = require('./lib/apiControllerGenerator')();
-var serviceGenerator = require('./lib/serviceGenerator')();
+var ModelGenerator = require('./lib/modelGenerator');
+var ScaffoldingGenerator = require('./lib/scaffoldingGenerator');
+var MobileScaffoldingGenerator = require('./lib/mobileScaffoldingGenerator');
+var ControllerGenerator = require('./lib/controllerGenerator');
+var ApiControllerGenerator = require('./lib/apiControllerGenerator');
+var ServiceGenerator = require('./lib/serviceGenerator');
 
 // shell listener
 // ==========================================
@@ -23,13 +23,14 @@ program
    .version('0.9.0')
    .option('-m, --mobile', 'add mobile views with jQuery mobile from model')
    .option('-a, --api', 'add restfull web API from model')
-   .option('-h, --help', outputDocs());
+   .option('-h, --help', 'use : node microscope.js docs');
 
 /*
 * some comment here.
 */
 program.on('generate_model', function (args) {
     var model = getModel(args);
+    var modelGenerator = new ModelGenerator();
     modelGenerator.generateModel(model);
 });
 
@@ -38,6 +39,7 @@ program.on('generate_model', function (args) {
 */
 program.on('generate_controller', function (args) {
     var model = getModel(args);
+    var controllerGenerator = new ControllerGenerator();
     controllerGenerator.generateController(model);
     console.log("controller created".green);
 });
@@ -48,31 +50,46 @@ program.on('generate_controller', function (args) {
 program.on('generate_crud', function (args) {
     var model = getModel(args);
 
+    var modelGenerator = new ModelGenerator();
     modelGenerator.generateModel(model);
+
+    var scaffoldingGenerator = new ScaffoldingGenerator();
     scaffoldingGenerator.generateIndexView(model);
     scaffoldingGenerator.generateDetailsView(model);
     scaffoldingGenerator.generateCreateView(model);
     scaffoldingGenerator.generateEditView(model);
     scaffoldingGenerator.generateDeleteView(model);
 
+    var serviceGenerator = new ServiceGenerator();
     serviceGenerator.generateService(model);
+
+    var controllerGenerator = new ControllerGenerator();
     controllerGenerator.generateController(model);
 
-    if (program.mobile) { 
+    if (program.mobile) {
+        var mobileScaffoldingGenerator = new MobileScaffoldingGenerator();
         mobileScaffoldingGenerator.generateMobileIndexView(model);
         mobileScaffoldingGenerator.generateMobileDetailsView(model);
         mobileScaffoldingGenerator.generateMobileCreateView(model);
         mobileScaffoldingGenerator.generateMobileEditView(model);
         mobileScaffoldingGenerator.generateMobileDeleteView(model);
     }
-    if (program.api) { apiControllerGenerator.generateApiController(model); }
+    if (program.api) {
+        var apiControllerGenerator = new ApiControllerGenerator();
+        apiControllerGenerator.generateApiController(model);
+    }
 });
 
 /*
 * Generate Restfull web api with model.
 */
-program.on('generate_api', function(args){
+program.on('generate_api', function (args) {
     var model = getModel(args);
+
+    var modelGenerator = new ModelGenerator();
+    var serviceGenerator = new ServiceGenerator();
+    var apiControllerGenerator = new ApiControllerGenerator();
+
     modelGenerator.generateModel(model);
     serviceGenerator.generateService(model);
     apiControllerGenerator.generateApiController(model);
@@ -81,22 +98,24 @@ program.on('generate_api', function(args){
 /*
 * synchronize DbContext with database.
 */
-program.on('db_sync', function(){
-    var dbContext = require('./models/dbContext')();
+program.on('db_sync', function () {
+    var DbContext = require('./models/dbContext');
+    var dbContext = new DbContext();
     dbContext.sync();
 });
 
 /*
 * drop database tables.
 */
-program.on('db_drop', function(){
-    var dbContext = require('./models/dbContext')();
+program.on('db_drop', function () {
+    var DbContext = require('./models/dbContext');
+    var dbContext = new DbContext();
     dbContext.drop();
 });
 
 /*
- * microscope framework generators docs.
- */
+* microscope framework generators docs.
+*/
 program.on('docs', function () {
     console.log('(Type microscope.js --help for command options) \n'.yellow);
     outputDocs();
@@ -105,7 +124,7 @@ program.on('docs', function () {
 // functions
 // ==========================================
 
-function outputDocs(){
+function outputDocs() {
     console.log('\nUse microscope generators with following commands : \n'.yellow);
     var Table = require('cli-table');
     var table = new Table();
@@ -133,11 +152,11 @@ function outputDocs(){
 /*
 * Check validity of property type.
 */
-function isValidPropertyType(type){
+function isValidPropertyType(type) {
     var validateType = ['STRING', 'TEXT', 'DATE', 'BOOLEAN', 'INTEGER', 'FLOAT'];
-    if(validateType.contains(type)){
+    if (validateType.contains(type)) {
         return true;
-    }else{
+    } else {
         return false;
     }
 };
@@ -145,7 +164,7 @@ function isValidPropertyType(type){
 /*
 * Get model from arguments.
 */
-function getModel(args){
+function getModel(args) {
     var model = { name: args[0], properties: [] };
     var isValidateModel = true;
 
@@ -154,20 +173,19 @@ function getModel(args){
         var name = property[0];
         var type = property[1].toUpperCase();
 
-        if(isValidPropertyType(type)){
-            model.properties.push({ name: name, type: type });    
+        if (isValidPropertyType(type)) {
+            model.properties.push({ name: name, type: type });
         }
-        else{
+        else {
             isValidateModel = false;
             console.log('\nunknown type for property : '.red + name);
         }
     }
 
-    if(isValidateModel)
-    {
+    if (isValidateModel) {
         console.log('');
         return model;
-    }else{
+    } else {
         return null;
     }
 }
@@ -175,7 +193,7 @@ function getModel(args){
 /*
 * Extend JavaScript Array prototype.
 */
-Array.prototype.contains = function(obj) {
+Array.prototype.contains = function (obj) {
     var i = this.length;
     while (i--) {
         if (this[i] === obj) {

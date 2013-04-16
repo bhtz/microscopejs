@@ -1,59 +1,92 @@
-var userService = module.exports = function() { 
- 
-    var self = this; 
- 
-    // Dependencies 
-    var dbContext = require('../models/dbContext')();
- 
-    // get user by id 
-    self.get = function(userId, next) { 
-        dbContext.users.find(userId).success(function(user) { 
-            next(user); 
-        });
-    };
+/**
+* UserService class
+*/
+var UserService = module.exports = (function () {
 
-    // get user by username
-    self.getByUsername = function (username, next) {
-        dbContext.users.find({ where: { username: username} }).success(function (user) {
+    /**
+    * Dependencies.
+    */
+    var DbContext = require('../models/dbContext');
+
+    /**
+    * Constructor.
+    */
+    var UserService = function () {
+        this.dbContext = new DbContext();
+    }
+
+    /**
+    * Get a user by id.
+    * @param {userId} - user primary key.
+    * @param {next} - callback function. 
+    */
+    UserService.prototype.get = function (userId, next) {
+        this.dbContext.users.find(userId).success(function (user) {
             next(user);
         });
-    }; 
- 
-    // get all user 
-    self.getAll = function(next) { 
-        dbContext.users.findAll({order: 'id DESC'}).success(function(users) { 
-            next(users); 
-        }); 
-    }; 
- 
-    // save user 
-    self.save = function(user, next) { 
-        var user = dbContext.users.build(user); 
-        user.save().success(function(user) { 
-            next(user); 
-        }).error(function(error) { 
-            next({message: error}); 
-        }); 
-    }; 
- 
-    // edit a user 
-    self.update = function(user, next) { 
-        user.save().success(function (user) { 
-            next(user); 
-        }).error(function(error) { 
-            next({message: error}); 
-        }); 
-    }; 
- 
-    // delete an user 
-    self.remove = function(userId, next) { 
-    	console.log('le ID en params : '+userId);      
-        dbContext.users.find(userId).success(function(user) { 
-			user.destroy().complete(function(error) { 
-				next(error); 
-			}); 
-        }) 
-    }; 
- 
-    return self; 
-};
+    }
+
+    /**
+    * Get user by username.
+    * @param {username} - user name.
+    * @param {next} - callback function. 
+    */
+    UserService.prototype.getByUsername = function (username, next) {
+        this.dbContext.users.find({ where: { username: username} }).success(function (user) {
+            next(user);
+        });
+    }
+
+    /**
+    * Get all user.
+    * @param {next} - callback function. 
+    */
+    UserService.prototype.getAll = function (next) {
+        this.dbContext.users.findAll({ order: 'id DESC' }).success(function (users) {
+            next(users);
+        });
+    }
+
+    /**
+    * Persist user to database.
+    * @param {user} - user instance.
+    * @param {next} - callback function. 
+    */
+    UserService.prototype.save = function (user, next) {
+        var user = this.dbContext.users.build(user);
+        user.save().success(function (user) {
+            next(user);
+        }).error(function (error) {
+            next({ message: error });
+        });
+    }
+
+    /**
+    * Update user.
+    * @param {user} - user instance.
+    * @param {next} - callback function. 
+    */
+    UserService.prototype.update = function (user, next) {
+        user.save().success(function (user) {
+            next(user);
+        }).error(function (error) {
+            next({ message: error });
+        });
+    }
+
+    /**
+    * Delete user.
+    * @param {userId} - user primary key.
+    * @param {next} - callback function. 
+    */
+    UserService.prototype.remove = function (userId, next) {
+        this.dbContext.users.find(userId).success(function (user) {
+            user.destroy().complete(function (error) {
+                next(error);
+            });
+        });
+    }
+
+    return UserService;
+
+})();

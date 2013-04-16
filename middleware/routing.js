@@ -1,21 +1,38 @@
-var routing = module.exports = function (app) {
-    var self = this;
+/**
+* Routing class
+*/
+var Routing = module.exports = (function () {
+
+    /**
+    * Modules dependencies.
+    */
     var HomeController = require('../controllers/homeController');
-    
-    /*
-    * Enable controller routing here.
+    var AccountController = require('../controllers/accountController');
+
+    /**
+    * @param {app} - express app.
     */
-    self.controllerRouting = function () {
+    function Routing(app) {
+        this.registerRoutes(app);
+        this.registerApiRoutes(app);
+    }
+
+    /**
+    * Routing actions.
+    * @param {app}
+    */
+    Routing.prototype.registerRoutes = function (app) {
         var homeController = new HomeController(app);
-        require('../controllers/accountController')(app);
+        var accountController = new AccountController(app);
     };
 
-    /*
-    * Enable api routing here.
+    /**
+    * API Routing.
+    * @param {app}
     */
-    self.apiRouting = function () {
-        //require('../api/userApiController')(app);
+    Routing.prototype.registerApiRoutes = function (app) {
+
     };
 
-    return self;
-}
+    return Routing;
+})();

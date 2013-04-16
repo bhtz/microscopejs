@@ -1,38 +1,58 @@
-var dbContext = module.exports = function () {
-    var self = this;
+/**
+* DbContext class
+*/
+var DbContext = module.exports = (function () {
 
-    /*
-    * Dependencies
+    /**
+    * Dependencies.
     */
     var Sequelize = require("sequelize");
     var dbConfig = require("../configs/database.json");
 
-    // database connection configuration.
-    var sequelize = new Sequelize(dbConfig.name, dbConfig.user, dbConfig.password, {
-        host: dbConfig.host,
-        port: dbConfig.port,
-        dialect: dbConfig.dialect
-    });
+    /**
+    * Constructor.
+    * Add your entities 'DbSet' instance here.
+    */
+    function DbContext() {
+        this.sequelize = this.initializeDatabase();
 
-    // DbContext definition 
-    // enable your model entities.
-    self.users = require('./user')(Sequelize, sequelize);
-    
-    // Manage entities associations.
-    var modelBuider = function(){
+        //'DbSet' sample (pluralize entity name by convention):
+        this.users = require('./user')(Sequelize, this.sequelize);
+    }
+
+    /**
+    * Database connection instance.
+    * @return {sequelize} - return sequelize object instance.
+    */
+    DbContext.prototype.initializeDatabase = function () {
+        return sequelize = new Sequelize(dbConfig.name, dbConfig.user, dbConfig.password, {
+            host: dbConfig.host,
+            port: dbConfig.port,
+            dialect: dbConfig.dialect
+        });
+    };
+
+    /**
+    * Manage Database entities associations.
+    */
+    DbContext.prototype.modelBuilder = function () {
 
     };
 
-    // Database synchronization.
-    self.sync = function(){
-        modelBuider();
-        sequelize.sync();
+    /**
+    * Database synchronization.
+    */
+    DbContext.prototype.sync = function () {
+        this.modelBuilder();
+        this.sequelize.sync();
     };
 
-    // Drop all database tables.
-    self.drop = function(){
-        sequelize.drop();
+    /**
+    * Drop all database tables.
+    */
+    DbContext.prototype.drop = function () {
+        this.sequelize.drop();
     };
 
-    return self;
-}
+    return DbContext;
+})();

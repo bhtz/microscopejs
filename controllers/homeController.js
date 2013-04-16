@@ -1,22 +1,24 @@
 /**
-* HomeController class
+* Home controller class
 */
 var HomeController = module.exports = (function () {
+
+    var MembershipFilters = require('../middleware/membershipFilters');
 
     /**
     * @param {app} - express app.
     */
     function HomeController(app) {
         this.app = app;
-        this.filters = require('../middleware/membershipFilters')();
-        this.Actions(this.app);
+        this.filters = new MembershipFilters();
+        this.actions(this.app);
     }
 
     /**
-    * Controller actions.
+    * Home Controller actions.
     * @param {app}
     */
-    HomeController.prototype.Actions = function (app) {
+    HomeController.prototype.actions = function (app) {
 
         //index
         app.get('/', function (req, res) {
