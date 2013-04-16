@@ -23,7 +23,6 @@ app.configure(function () {
     app.use(partials());
     app.set('layout', 'layout');
 
-    app.use(express.favicon());
     app.use(express.logger('development'));
     app.use(express.cookieParser());
     app.use(express.bodyParser());
@@ -40,6 +39,7 @@ app.configure(function () {
         next();
     });
     app.use(app.router);
+    app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
     app.use(express.static(path.join(__dirname, 'public')));
 });
 
