@@ -1,10 +1,74 @@
+<style type="text/css">
+    ol li{margin-bottom: 10px;}
+    pre{background-color: #F8F8F8; padding:2px; border:1px solid #CCCCCC;}
+</style>
+
 <div style="text-align:center">
   <h1>microscope framework - MVC nodejs framework inspired by ASP MVC !</h1>
   <h3>Convention over configuration - MVC pattern - Scaffolding engine - Mobile views - Authentication - Sequelize ORM</h3>
 </div>
 
 <h2>Getting started</h2>
-  <p>getting started samples here</p>
+  <p>
+      <ol>
+          <li>
+              install <a href="http://nodejs.org/">Node.js</a><br>
+              <pre>sudo apt-get install nodejs npm</pre>
+            </li>
+
+          <li>
+              Create a new mysql database.
+          </li>
+
+          <li>
+              open a terminal at the root of microscopejs folder.
+          </li>
+
+          <li>
+              run the following command : <br>
+              <pre>node microscope.js docs</pre>to display basic commands documentation.
+          </li>
+
+          <li>
+              open <b>'./configs/database.json'</b> and set your database configuration.
+          </li>
+
+          <li>
+              run the following commands : <pre>node microscope.js db_sync</pre> to synchronize microscope with your database. <br>
+              You have now a new table call user (for enable authentication) in your database.
+          </li>
+
+          <li>
+              Now you can create entities with complete crud views, mobile views, and web api restfull. <br>
+              For example run the following command : <br>
+              <pre>node microscope.js generate_crud --api --mobile article title:string content:text</pre>
+              This command generate for you a Controller, an ApiController, a Service class, all CRUD views (and jQueryMobile views) for a model
+              article with properties : title (string) and content(text).
+          </li>
+
+          <li>
+              Now go to <b>'./middleware/routing'</b> and register routing for article by adding in module dependencies :<br>
+              <pre>var ArticleController = require('../controllers/articleController');</pre>
+              And in registerRoutes function : <br>
+              <pre>var articleController = new ArticleController(app);</pre> 
+          </li>
+
+          <li>
+              run again : <pre>node microscope.js db_sync</pre>
+              to synchronize your model (user + article) with your database. <br><br>
+          </li>
+
+          <li>
+              Run your microscope application : <pre>node server.js</pre>
+              and visit : <a href="http://localhost:3000/">your home page</a>  or <a href="http://localhost:3000/article">http://localhost:3000/article</a>
+          </li>
+
+          <li>
+              Enjoy microscope framework.
+          </li> 
+      </ol>
+
+  </p>
     
 <h2>Model</h2>
   <p>model docs here</p>
