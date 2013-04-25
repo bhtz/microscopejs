@@ -14,7 +14,7 @@ var DbContext = module.exports = (function () {
     * Add your entities 'DbSet' instance here.
     */
     function DbContext() {
-        this.sequelize = this.initializeDatabase();
+        this.sequelize = this.initializeDatabase(); 
 
         this.user = require('./user')(Sequelize, this.sequelize);
     }
