@@ -7,4 +7,3 @@ module.exports = function (Sequelize, sequelize) {
 	});
 	return user;
 }
-

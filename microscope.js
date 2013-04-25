@@ -117,7 +117,6 @@ program.on('db_drop', function () {
 * microscope framework generators docs.
 */
 program.on('docs', function () {
-    console.log('(Type microscope.js --help for command options) \n'.yellow);
     outputDocs();
 });
 
