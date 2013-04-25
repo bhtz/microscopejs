@@ -41,7 +41,7 @@ var AccountController = module.exports = (function () {
             passport.authenticate('local', { successRedirect: '/', failureRedirect: '/account/login' }),
             function (req, res) {
                 res.redirect('/');
-            });
+        });
 
         // logout
         app.get('/account/logout', function (req, res) {

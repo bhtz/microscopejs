@@ -21,7 +21,7 @@ var UserService = module.exports = (function () {
     * @param {next} - callback function. 
     */
     UserService.prototype.get = function (userId, next) {
-        this.dbContext.users.find(userId).success(function (user) {
+        this.dbContext.user.find(userId).success(function (user) {
             next(user);
         });
     }
@@ -32,7 +32,7 @@ var UserService = module.exports = (function () {
     * @param {next} - callback function. 
     */
     UserService.prototype.getByUsername = function (username, next) {
-        this.dbContext.users.find({ where: { username: username} }).success(function (user) {
+        this.dbContext.user.find({ where: { username: username} }).success(function (user) {
             next(user);
         });
     }
@@ -42,7 +42,7 @@ var UserService = module.exports = (function () {
     * @param {next} - callback function. 
     */
     UserService.prototype.getAll = function (next) {
-        this.dbContext.users.findAll({ order: 'id DESC' }).success(function (users) {
+        this.dbContext.user.findAll({ order: 'id DESC' }).success(function (users) {
             next(users);
         });
     }
@@ -53,7 +53,7 @@ var UserService = module.exports = (function () {
     * @param {next} - callback function. 
     */
     UserService.prototype.save = function (user, next) {
-        var user = this.dbContext.users.build(user);
+        var user = this.dbContext.user.build(user);
         user.save().success(function (user) {
             next(user);
         }).error(function (error) {
@@ -80,7 +80,7 @@ var UserService = module.exports = (function () {
     * @param {next} - callback function. 
     */
     UserService.prototype.remove = function (userId, next) {
-        this.dbContext.users.find(userId).success(function (user) {
+        this.dbContext.user.find(userId).success(function (user) {
             user.destroy().complete(function (error) {
                 next(error);
             });
