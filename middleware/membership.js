@@ -31,7 +31,7 @@ var Membership = module.exports = (function () {
         });
 
         passport.deserializeUser(function (id, next) {
-            dbContext.users.find(id).success(function (user) {
+            dbContext.user.find(id).success(function (user) {
                 next(null, user);
             });
         });
@@ -43,7 +43,7 @@ var Membership = module.exports = (function () {
                 passwordField: 'password'
             },
             function (username, password, done) {
-                dbContext.users.find({ where: { username: username} }).success(function (user) {
+                dbContext.user.find({ where: { username: username} }).success(function (user) {
                     if (bcrypt.compareSync(password, user.password)) {
                         return done(null, user);
                     }
