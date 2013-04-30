@@ -35,9 +35,9 @@ app.configure(function () {
     app.use(require('./middleware/deviceHandler'));
 
     app.use(function (req, res, next) {
--        res.locals.req = req;
--        next();
--    });
+       res.locals.req = req;
+       next();
+	});
 
     app.use(app.router);
     app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
