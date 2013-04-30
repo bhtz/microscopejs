@@ -15,7 +15,7 @@ var Membership = module.exports = (function () {
     * @param {LocalStrategy} - LocalStrategy authentication provider.
     */
     function Membership(passport, LocalStrategy) {
-        var dbContext = new DbContext();
+        this.dbContext = new DbContext();
         this.initialize(passport, LocalStrategy);
     }
 
@@ -31,7 +31,7 @@ var Membership = module.exports = (function () {
         });
 
         passport.deserializeUser(function (id, next) {
-            dbContext.user.find(id).success(function (user) {
+            self.dbContext.user.find(id).success(function (user) {
                 next(null, user);
             });
         });
@@ -43,7 +43,7 @@ var Membership = module.exports = (function () {
                 passwordField: 'password'
             },
             function (username, password, done) {
-                dbContext.user.find({ where: { username: username} }).success(function (user) {
+                self.dbContext.user.find({ where: { username: username} }).success(function (user) {
                     if (bcrypt.compareSync(password, user.password)) {
                         return done(null, user);
                     }
