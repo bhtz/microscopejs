@@ -55,7 +55,9 @@
               For example run the following command : <br>
               <pre>node microscope.js generate_crud --api --mobile article title:string content:text</pre>
               This command generate for you a Controller, an ApiController, a Service class, all CRUD views (and jQueryMobile views) for a model
-              article with properties : title (string) and content(text).
+              article with properties : title (string) and content(text).<br>
+              Go to <b>./models/dbContext.js</b> and add article to your dbContext properties like this :
+              <pre>this.article = require('./article')(Sequelize, this.sequelize);</pre>
           </li>
 
           <li>
