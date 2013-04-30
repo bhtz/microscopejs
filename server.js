@@ -34,10 +34,6 @@ app.configure(function () {
 
     app.use(require('./middleware/deviceHandler'));
 
-    app.use(function (req, res, next) {
-        res.locals.req = req;
-        next();
-    });
     app.use(app.router);
     app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
     app.use(express.static(path.join(__dirname, 'public')));
@@ -55,16 +51,6 @@ app.configure('production', function () {
     errorOptions = {};
 });
 app.use(require('./middleware/errorHandler')(errorOptions));
-
-/*
-* Initialize DbContext and synchronize with database.
-* Keep it here if you want auto synchronization with db,
-* or remove it and only use microscope command : 
-* node microscope.js db_sync
-*/
-//var DbContext = require('./models/dbContext');
-//var dbContext = new DbContext();
-//dbContext.sync();
 
 /*
 * Configure application routing here.
