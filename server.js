@@ -14,7 +14,9 @@ var membership = new Membership(passport, LocalStrategy);
 
 var app = express();
 
-// configuration
+/**
+* Express app configuration.
+*/
 app.configure(function () {
     app.set('port', process.env.PORT || 3000);
 
@@ -37,7 +39,7 @@ app.configure(function () {
     app.use(function (req, res, next) {
        res.locals.req = req;
        next();
-	});
+	  });
 
     app.use(app.router);
     app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
@@ -63,7 +65,9 @@ app.use(require('./middleware/errorHandler')(errorOptions));
 */
 var routing = new Routing(app);
 
-// Initialize application server
+/**
+* Initialize application server.
+*/
 http.createServer(app).listen(app.get('port'), function(){
   console.log("microscope application listening on port " + app.get('port'));
 });

@@ -78,7 +78,7 @@ var AccountController = module.exports = (function () {
 
         //register post
         app.post('/account/register', function (req, res) {
-            if (req.body.password == req.body.confirmPassword) {
+            if (req.body.password == req.body.confirmPassword && req.body.password.length > 6) {
                 self.userService.getByUsername(req.body.username, function (user) {
                     if (!user) {
                         var hashedPassword = bcrypt.hashSync(req.body.password);

@@ -43,16 +43,21 @@ var Membership = module.exports = (function () {
                 passwordField: 'password'
             },
             function (username, password, done) {
-                self.dbContext.user.find({ where: { username: username} }).success(function (user) {
-                    if (bcrypt.compareSync(password, user.password)) {
-                        return done(null, user);
-                    }
-                    else {
-                        return done(null, false, { message: 'Incorrect password.' });
-                    }
-                }).error(function (error) {
-                    return done(error);
-                });
+                if(password.length > 6){
+                    self.dbContext.user.find({ where: { username: username} }).success(function (user) {
+                        //TODO : verify user here.
+                        if (bcrypt.compareSync(password, user.password)) {
+                            return done(null, user);
+                        }
+                        else {
+                            return done(null, false, { message: 'Incorrect password.' });
+                        }
+                    }).error(function (error) {
+                        return done(error);
+                    });
+                }else{
+                    return done(null, false, { message: 'password length must be 6 or more.' });
+                }
             }
         ));
     };
