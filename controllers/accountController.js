@@ -56,7 +56,7 @@ var AccountController = module.exports = (function () {
 
         // changePassword get
         app.post('/account/changePassword', self.filters.authorize, function (req, res) {
-            if (req.body.newPassword == req.body.confirmNewPassword) {
+            if (req.body.newPassword == req.body.confirmNewPassword && req.body.password.length > 6) {
                 self.userService.get(req.user.id, function (user) {
                     if (bcrypt.compareSync(req.body.oldPassword, user.password)) {
                         user.password = bcrypt.hashSync(req.body.newPassword);
