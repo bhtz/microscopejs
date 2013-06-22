@@ -1,13 +1,10 @@
+var DbContext = require('../models/dbContext');
+
 /**
 * UserService class
 */
 var UserService = module.exports = (function () {
-
-    /**
-    * Dependencies.
-    */
-    var DbContext = require('../models/dbContext');
-
+        
     /**
     * Constructor.
     */
@@ -24,7 +21,7 @@ var UserService = module.exports = (function () {
         this.dbContext.user.find(userId).success(function (user) {
             next(user);
         });
-    }
+    };
 
     /**
     * Get user by username.
@@ -33,9 +30,14 @@ var UserService = module.exports = (function () {
     */
     UserService.prototype.getByUsername = function (username, next) {
         this.dbContext.user.find({ where: { username: username} }).success(function (user) {
-            next(user);
+            if(!user) {
+                next(null);
+            }
+            else{
+                next(user);
+            }
         });
-    }
+    };
 
     /**
     * Get all user.
@@ -45,21 +47,22 @@ var UserService = module.exports = (function () {
         this.dbContext.user.findAll({ order: 'id DESC' }).success(function (users) {
             next(users);
         });
-    }
+    };
 
     /**
     * Persist user to database.
     * @param {user} - user instance.
     * @param {next} - callback function. 
     */
-    UserService.prototype.save = function (user, next) {
-        var user = this.dbContext.user.build(user);
-        user.save().success(function (user) {
-            next(user);
-        }).error(function (error) {
-            next({ message: error });
+    UserService.prototype.save = function (user, callback) {
+        this.dbContext.user.build(user)
+        .save()
+        .success(function(model) {
+            callback(model);
+        }).error(function(error) {
+            callback(error);
         });
-    }
+    };
 
     /**
     * Update user.
@@ -72,7 +75,7 @@ var UserService = module.exports = (function () {
         }).error(function (error) {
             next({ message: error });
         });
-    }
+    };
 
     /**
     * Delete user.
@@ -85,8 +88,7 @@ var UserService = module.exports = (function () {
                 next(error);
             });
         });
-    }
+    };
 
     return UserService;
-
 })();

@@ -1,89 +1,139 @@
 ﻿/**
+* Module dependencies.
+*/
+var MembershipFilters = require('../middleware/membershipFilters');
+var UserService = require('../services/userService');
+
+/**
 * UserController class
 */
 var UserController = module.exports = (function () {
 
     /**
-    * Module dependencies.
+    * Attributes.
     */
-    var MembershipFilters = require('../middleware/membershipFilters');
-    var UserService = require('../services/userService');
+    var userService = new UserService();
+    var filters = new MembershipFilters();
 
     /**
     * Constructor.
     * @param {app} - express app.
     */
     function UserController(app) {
-        this.app = app;
-        this.userService = new UserService();
-        this.filters = new MembershipFilters();
-        this.actions(this.app);
+        this.routes(app);
     }
 
     /**
-    * User Controller actions.
-    * @param {app}
+    * UserController routes.
+    * @param {app} - express app.
     */
-    UserController.prototype.actions = function (app) {
-        var self = this;
+    UserController.prototype.routes = function(app) {
+        app.get('/user', filters.authorize, this.index);
+        app.get('/user/details/:id', filters.authorize, this.details);
+        app.get('/user/create', filters.authorize, this.create);
+        app.post('/user/create', filters.authorize, this.create_post);
+        app.get('/user/edit/:id', filters.authorize, this.edit);
+        app.post('/user/edit', filters.authorize, this.edit_post);
+        app.get('/user/delete/:id', filters.authorize, this.delete);
+        app.post('/user/delete', filters.authorize, this.delete_post);
+    };
 
-        // index 
-        app.get('/user', self.filters.authorize, function (req, res) {
-            this.userService.getAll(function (users) {
-                res.render('user/index', { 'users': users });
-            });
+    /**
+    * [httpget]
+    * UserController index action.
+    * @param {req} http request.
+    * @param {res} http response.
+    */
+    UserController.prototype.index = function(req, res) {
+        userService.getAll(function (users) {
+            res.render('user/index', { 'users': users });
         });
+    };
 
-        // details 
-        app.get('/user/details/:id', self.filters.authorize, function (req, res) {
-            var userId = req.params.id;
-            this.userService.get(userId, function (user) {
-                res.render('user/details', { 'user': user });
-            });
+    /**
+    * [httpget]
+    * UserController details action.
+    * @param {req} http request.
+    * @param {res} http response.
+    */
+    UserController.prototype.details = function(req, res) {
+        var userId = req.params.id;
+        userService.get(userId, function (user) {
+            res.render('user/details', { 'user': user });
         });
+    };
 
-        // create get 
-        app.get('/user/create', self.filters.authorize, function (req, res) {
-            var user = {};
-            res.render('user/create', { 'user': user });
+    /**
+    * [httpget]
+    * UserController edit action.
+    * @param {req} http request.
+    * @param {res} http response.
+    */
+    UserController.prototype.edit = function(req, res) {
+        var userId = req.params.id;
+        userService.get(userId, function (user) {
+            res.render('user/edit', { 'user': user });
         });
+    };
 
-        // create post 
-        app.post('/user/create', self.filters.authorize, function (req, res) {
-            this.userService.save(req.body, function (data) {
-                res.redirect('/user');
-            });
+    /**
+    * [httppost]
+    * UserController edit post action.
+    * @param {req} http request.
+    * @param {res} http response.
+    */
+    UserController.prototype.edit_post = function(req, res) {
+        var user = req.body;
+        userService.update(user, function (user) {
+            res.redirect('/user');
         });
+    };    
 
-        // edit get 
-        app.get('/user/edit/:id', self.filters.authorize, function (req, res) {
-            var userId = req.params.id;
-            this.userService.get(userId, function (user) {
-                res.render('user/edit', { 'user': user });
-            });
+    /**
+    * [httpget]
+    * UserController create action.
+    * @param {req} http request.
+    * @param {res} http response.
+    */
+    UserController.prototype.create = function(req, res) {
+        var user = {};
+        res.render('user/create', { 'user': user });  
+    };
+
+    /**
+    * [httppost]
+    * UserController create post action.
+    * @param {req} http request.
+    * @param {res} http response.
+    */
+    UserController.prototype.create_post = function(req, res) {
+        userService.save(req.body, function (data) {
+            res.redirect('/user');
         });
+    };
 
-        // edit post 
-        app.post('/user/edit', self.filters.authorize, function (req, res) {
-            var user = req.body;
-            this.userService.update(user, function (user) {
-                res.redirect('/user');
-            });
+    /**
+    * [httpget]
+    * UserController delete action.
+    * @param {req} http request.
+    * @param {res} http response.
+    */
+    UserController.prototype.delete = function(req, res) {
+        var userId = req.params.id;
+        userService.get(userId, function (user) {
+            res.render('user/delete', { 'user': user });
         });
+    };
 
-        // delete get 
-        app.get('/user/delete/:id', self.filters.authorize, function (req, res) {
-            var userId = req.params.id;
-            this.userService.get(userId, function (user) {
-                res.render('user/delete', { 'user': user });
-            });
-        });
-
-        // delete post 
-        app.post('/user/delete', self.filters.authorize, function (req, res) {
-            this.userService.remove(req.body.id, function (data) {
-                res.redirect('/user');
-            });
+    /**
+    * [httppost]
+    * UserController delete post action.
+    * @param {req} http request.
+    * @param {res} http response.
+    */
+    UserController.prototype.delete_post = function(req, res) {
+        userService.remove(req.body.id, function (data) {
+            res.redirect('/user');
         });
     };
 

@@ -1,29 +1,29 @@
 /**
+* Dependencies.
+*/
+var Sequelize = require("sequelize");
+var dbConfig = require("../configs/database.json");
+
+/**
 * DbContext class
 */
 var DbContext = module.exports = (function () {
 
     /**
-    * Dependencies.
-    */
-    var Sequelize = require("sequelize");
-    var dbConfig = require("../configs/database.json");
-
-    /**
     * Constructor.
-    * Add your entities 'DbSet' instance here.
+    * Add your entities 'DbSet' instance here like user.
     */
     function DbContext() {
-        this.sequelize = this.initializeDatabase(); 
+        this.context = this.getContext();
 
-        this.user = require('./user')(Sequelize, this.sequelize);
+        this.user = require('./user')(Sequelize, this.context);
     }
 
     /**
     * Database connection instance.
     * @return {sequelize} - return sequelize object instance.
     */
-    DbContext.prototype.initializeDatabase = function () {
+    DbContext.prototype.getContext = function () {
         return sequelize = new Sequelize(dbConfig.name, dbConfig.user, dbConfig.password, {
             host: dbConfig.host,
             port: dbConfig.port,
@@ -39,18 +39,18 @@ var DbContext = module.exports = (function () {
     };
 
     /**
-    * Database synchronization.
+    * Database - models synchronization.
     */
     DbContext.prototype.sync = function () {
         this.modelBuilder();
-        this.sequelize.sync();
+        this.context.sync();
     };
 
     /**
     * Drop all database tables.
     */
     DbContext.prototype.drop = function () {
-        this.sequelize.drop();
+        this.context.drop();
     };
 
     return DbContext;

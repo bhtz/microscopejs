@@ -1,22 +1,26 @@
 /**
+* Module dependencies.
+*/
+var bcrypt = require('bcrypt-nodejs');
+var UserService = require('../services/userService');
+
+/**
 * Membership class
 */
 var Membership = module.exports = (function () {
 
     /**
-    * Module dependencies.
+    * Attributes.
     */
-    var DbContext = require('../models/dbContext');
-    var bcrypt = require('bcrypt-nodejs');
+    var userService = new UserService();
 
     /**
     * Constructor.
     * @param {passport} - passport instance.
     * @param {LocalStrategy} - LocalStrategy authentication provider.
     */
-    function Membership(passport, LocalStrategy) {
-        this.dbContext = new DbContext();
-        this.initialize(passport, LocalStrategy);
+    function Membership(passport, Strategy) {
+        this.initialize(passport, Strategy);
     }
 
     /**
@@ -25,14 +29,14 @@ var Membership = module.exports = (function () {
     * @param {LocalStrategy} - LocalStrategy authentication provider.
     */
     Membership.prototype.initialize = function (passport, LocalStrategy) {
-        var self = this;
-        passport.serializeUser(function (user, done) {
-            done(null, user.id);
+
+        passport.serializeUser(function (user, callback) {
+            callback(null, user.id);
         });
 
-        passport.deserializeUser(function (id, next) {
-            self.dbContext.user.find(id).success(function (user) {
-                next(null, user);
+        passport.deserializeUser(function (id, callback) {
+            userService.get(id, function (user) {
+                callback(null, user);
             });
         });
 
@@ -42,21 +46,29 @@ var Membership = module.exports = (function () {
                 usernameField: 'username',
                 passwordField: 'password'
             },
-            function (username, password, done) {
+            function (username, password, callback) {
+                // var username = username;
+                // var password = password;
+                console.log(password);
                 if(password.length > 6){
-                    self.dbContext.user.find({ where: { username: username} }).success(function (user) {
-                        //TODO : verify user here.
-                        if (bcrypt.compareSync(password, user.password)) {
-                            return done(null, user);
+                    userService.getByUsername(username, function (user) {
+                        if(user){
+                            if (bcrypt.compareSync(password, user.password)) {
+                                return callback(null, user);
+                            }
+                            else {
+                                console.log('Incorrect password.');
+                                return callback(null, false, { message: 'Incorrect password.' });
+                            }
                         }
                         else {
-                            return done(null, false, { message: 'Incorrect password.' });
+                            console.log('Incorrect username');
+                            return callback(null, false, { message: 'Incorrect username' });
                         }
-                    }).error(function (error) {
-                        return done(error);
                     });
                 }else{
-                    return done(null, false, { message: 'password length must be 6 or more.' });
+                    console.log('password length error');
+                    return callback(null, false, { message: 'password length must be 6 or more.' });
                 }
             }
         ));

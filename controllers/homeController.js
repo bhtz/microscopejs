@@ -1,33 +1,59 @@
 /**
+* Module dependencies.
+*/
+var MembershipFilters = require('../middleware/membershipFilters')
+    UserService = require('../services/userService');
+
+/**
 * Home controller class
 */
 var HomeController = module.exports = (function () {
 
-    var MembershipFilters = require('../middleware/membershipFilters');
+    /**
+    * Attributes.
+    */
+    var userService = new UserService();
+    var filters = new MembershipFilters();
 
     /**
+    * Constructor.
     * @param {app} - express app.
     */
     function HomeController(app) {
-        this.app = app;
-        this.filters = new MembershipFilters();
-        this.actions(this.app);
+        this.routes(app);
     }
 
     /**
-    * Home Controller actions.
-    * @param {app}
+    * HomeController routing.
     */
-    HomeController.prototype.actions = function (app) {
+    HomeController.prototype.routes = function(app) {
+        app.get('/', this.index);
+        app.get('/home/docs', this.docs);
+        app.get('/home/test', this.test);
+    };
 
-        //index
-        app.get('/', function (req, res) {
-            console.log(req.user);
-            res.render('home/index');
-        });
+    /**
+    * [HttpGet].
+    * HomeController Index action.
+    */
+    HomeController.prototype.index = function(req, res) {
+        res.render('home/index');
+    };
 
-        //about
-        app.get('/home/docs', function (req, res) {
+    /**
+    * [HttpGet].
+    * HomeController docs action.
+    */
+    HomeController.prototype.docs = function(req, res) {
+        res.render('home/docs');
+    };
+
+    /**
+    * [HttpGet].
+    * HomeController test action.
+    */
+    HomeController.prototype.test = function(req, res) {
+        userService.getAll(function(users){
             res.render('home/docs');
         });
     };
