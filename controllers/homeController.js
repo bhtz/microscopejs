@@ -48,15 +48,5 @@ var HomeController = module.exports = (function () {
         res.render('home/docs');
     };
 
-    /**
-    * [HttpGet].
-    * HomeController test action.
-    */
-    HomeController.prototype.test = function(req, res) {
-        userService.getAll(function(users){
-            res.render('home/docs');
-        });
-    };
-
     return HomeController;
 })();
