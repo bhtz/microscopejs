@@ -35,12 +35,16 @@ program.on('generate_model', function (args) {
 });
 
 /*
-* Generate controller.
+* Generate controller and model from args.
 */
 program.on('generate_controller', function (args) {
     var model = getModel(args);
+    var modelGenerator = new ModelGenerator();
     var controllerGenerator = new ControllerGenerator();
+
+    modelGenerator.generateModel(model);
     controllerGenerator.generateController(model);
+
     console.log("controller created".green);
 });
 

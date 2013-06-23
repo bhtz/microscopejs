@@ -29,7 +29,6 @@ var HomeController = module.exports = (function () {
     HomeController.prototype.routes = function(app) {
         app.get('/', this.index);
         app.get('/home/docs', this.docs);
-        app.get('/home/test', this.test);
     };
 
     /**
