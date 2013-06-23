@@ -46,7 +46,7 @@
                 </li>
 
                 <li>
-                    run the following commands : <pre>node microscope.js db_sync</pre> to synchronize microscope with your database. <br>
+                    run the following commands : <pre>node microscope.js db_sync</pre> to synchronize microscope model with your database. <br>
                     You have now a new table call user (for enable authentication) in your database.
                 </li>
 
@@ -54,7 +54,7 @@
                     Now you can create entities with complete crud views, mobile views, and web api restfull. <br>
                     For example run the following command : <br>
                     <pre>node microscope.js generate_crud --api --mobile article title:string content:text</pre>
-                    This command generate for you a Controller, an ApiController, a Service class, all CRUD views (and jQueryMobile views) for a model
+                    This command generate for you a Controller, an ApiController, a Service layer, all CRUD views (and jQueryMobile views) for a model
                     article with properties : title (string) and content(text).<br>
                     Go to <b>./models/dbContext.js</b> and add article to your dbContext properties like this :
                     <pre>this.article = require('./article')(Sequelize, this.sequelize);</pre>
@@ -100,49 +100,56 @@
             Microscope framework use MVC pattern. You can create microscope controller like the following sample :
             <pre>
                 /**
-                * Sample controller class
+                * Module dependencies.
                 */
-                var SampleController = module.exports = (function () {
+                var MembershipFilters = require('../middleware/membershipFilters')
+                    UserService = require('../services/userService');
+
+                /**
+                * Home controller class
+                */
+                var HomeController = module.exports = (function () {
 
                     /**
+                    * Attributes.
+                    */
+                    var userService = new UserService();
+                    var filters = new MembershipFilters();
+
+                    /**
+                    * Constructor.
                     * @param {app} - express app.
                     */
-                    function SampleController(app) {
-                        this.app = app;
-                        this.actions(this.app);
+                    function HomeController(app) {
+                        this.routes(app);
                     }
 
                     /**
-                    * Sample Controller actions.
-                    * @param {app}
+                    * HomeController routing.
                     */
-                    SampleController.prototype.actions = function (app) {
-
-                        //[httpget]
-                        app.get('/sample', function (req, res) {
-                            res.render('home/index');
-                        });
-
-                        //[httpget]
-                        app.get('/sample/docs', function (req, res) {
-                            res.render('home/docs');
-                        });
+                    HomeController.prototype.routes = function(app) {
+                        app.get('/', this.index);
+                        app.get('/home/docs', this.docs);
                     };
 
-                    return SampleController;
+                    /**
+                    * [HttpGet].
+                    * HomeController Index action.
+                    */
+                    HomeController.prototype.index = function(req, res) {
+                        res.render('home/index');
+                    };
+
+                    /**
+                    * [HttpGet].
+                    * HomeController docs action.
+                    */
+                    HomeController.prototype.docs = function(req, res) {
+                        res.render('home/docs');
+                    };
+
+                    return HomeController;
                 })();
-            </pre>
-
-            You have just to enable your new controller in <b>./middleware/routing.js</b>
-            <br>
-            Module dependencies :
-            <pre>
-                var SampleController = require('../controllers/sampleController');
-            </pre>
-
-            Instantiate it in registerRoutes function:
-            <pre>
-                var sampleController = new SampleController(app);
             </pre>
         </p>
 
@@ -155,11 +162,21 @@
         </p>
 
       <h3 id="generators">Generators</h3>
-        <p>generators docs here</p>
+        <p>
+            generators docs here <br>
+            ...
+        </p>
 
       <h3 id="services">Services</h3>
-        <p>services docs here</p>
+        <p>
+            microscope.js come with a service layer. <br>
+            ...
+        </p>
 
       <h3 id="authentication">Authentication - membership</h3>
-        <p>authentication with passportjs docs here</p>
+        <p>
+            microscope.js use passport.js module to perform authentication.
+            See <a href="http://passportjs.org/">passport.js</a> documentation. <br>
+            See <b>./middleware/membership.js</b>.
+        </p>
   </div>
