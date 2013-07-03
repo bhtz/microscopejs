@@ -1,8 +1,7 @@
 /**
 * Module dependencies.
 */
-var MembershipFilters = require('../middleware/membershipFilters')
-    UserService = require('../services/userService');
+var MembershipFilters = require('../middleware/membershipFilters');
 
 /**
 * Home controller class
@@ -12,7 +11,6 @@ var HomeController = module.exports = (function () {
     /**
     * Attributes.
     */
-    var userService = new UserService();
     var filters = new MembershipFilters();
 
     /**
