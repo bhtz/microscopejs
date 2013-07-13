@@ -11,8 +11,11 @@ var deviceHandler = module.exports = function (req, res, next) {
     var renderer = res.render;
     res.render = function (view, model, next) {
         var renderData = getRenderData(req, view);
-        if (model != null)
-            model.layout = renderData.layout;
+        if (model != null){
+            if(model.layout != false){
+                model.layout = renderData.layout;
+            }
+        }
         else {
             model = { layout: renderData.layout };
         }
@@ -46,4 +49,5 @@ var deviceHandler = module.exports = function (req, res, next) {
         return isMobile;
     }
 };
+
 
