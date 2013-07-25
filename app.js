@@ -4,7 +4,7 @@
 var express = require('express')
   , http = require('http')
   , path = require('path')
-  , Bootstraper = require('./bootstraper')
+  , Bootloader = require('./bootloader')
   , Membership = require('./middleware/membership')
   , passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy
@@ -62,7 +62,7 @@ app.use(require('./middleware/errorHandler')(errorOptions));
 * Configure application routing here.
 * see ./bootstraper.js.
 */
-var bootstraper = new Bootstraper(app);
+var bootloader = new Bootloader(app);
 
 /**
 * Initialize application server.
