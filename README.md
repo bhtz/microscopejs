@@ -1,20 +1,23 @@
-microscopejs - Node.js MVC framework inspired by ASP MVC.
-============
+README
+======
 
-install nodejs :
-sudo apt-get install nodejs or see http://nodejs.org/
+What is microscope.js
+---------------------
+
+microscopejs is a node.js MVC framework for rapid web development.
+microscopejs is currently in beta version. V1 come as soon as possible with powerfull CLI and code refactoring.
+
+Requirements
+------------
+
+node.js >= 0.8
+
+Installation
+------------
 
 git clone https://github.com/bhtz/microscopejs.git
-or download and unzip microscopejs folder.
 
-cd microscopejs/
+Documentation
+-------------
 
-try the following commands :
-
-node microscope.js docs
-
-sample command : generate 'article' entity crud with mobile views and restfull api :
-
-node microscope.js generate_crud --mobile --api article title:string content:text
-
-enjoy microscope framework !
+www.microscopejs.com

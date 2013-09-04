@@ -29,7 +29,7 @@ program
 * some comment here.
 */
 program.on('generate_model', function (args) {
-    var model = getModel(args);
+    var model = getModelFromArgs(args);
     var modelGenerator = new ModelGenerator();
     modelGenerator.generateModel(model);
 });
