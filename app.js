@@ -1,16 +1,16 @@
 /**
  * Module dependencies.
  */
-var express = require('express')
-  , http = require('http')
-  , path = require('path')
-  , Bootloader = require('./bootloader')
-  , Membership = require('./middleware/membership')
-  , passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy
-  , partials = require('express-partials');
+var express       = require('express');
+var http          = require('http');
+var path          = require('path');
+var Bootloader    = require('./bootloader');
+var Membership    = require('./middleware/membership');
+var passport      = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var partials      = require('express-partials');
 
-var app = express();
+var app        = express();
 var membership = new Membership(passport, LocalStrategy);
 
 /**

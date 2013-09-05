@@ -7,7 +7,7 @@ var dbConfig = require("../configs/database.json");
 /**
 * DbContext class
 */
-var DbContext = module.exports = (function () {
+(function () {
 
     /**
     * Constructor.
@@ -34,9 +34,7 @@ var DbContext = module.exports = (function () {
     /**
     * Manage Database entities associations.
     */
-    DbContext.prototype.modelBuilder = function () {
-
-    };
+    DbContext.prototype.modelBuilder = function (){};
 
     /**
     * Database - models synchronization.
@@ -53,5 +51,5 @@ var DbContext = module.exports = (function () {
         this.context.drop();
     };
 
-    return DbContext;
+    return module.exports = DbContext;
 })();
