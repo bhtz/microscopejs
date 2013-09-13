@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>microscopejs - MVC nodejs framework</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/styles/application.css">
+    <link href="/styles/bootstrap/bootstrap.min.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+
+		<nav class="navbar navbar-default navbar-inverse navbar-static-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/">
+						<img src="/images/microscope.png" style="width: 28px; margin:0; padding:0;"/> microscopejs
+					</a>
+				</div>
+
+				<div class="collapse navbar-collapse navbar-ex1-collapse">
+				    <ul class="nav navbar-nav">
+				    	<li><a href="/home/docs">docs</a></li>
+				    </ul>
+				    <ul class="nav navbar-nav navbar-right">
+				      	<%- partial('shared/_login') %>
+				    </ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container">
+			<div class="row">
+
+				<% if(flash !== undefined && flash != ""){ %>
+					<div class="alert alert-warning"><%- flash %></div>
+				<% } %>
+
+				<%- body %>
+			</div>
+		</div>
+
+	    <script src="/scripts/vendors/jquery.js"></script>
+	    <script src="/scripts/vendors/bootstrap.min.js"></script>
+  </body>
+</html>

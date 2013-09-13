@@ -1,8 +1,0 @@
-{
-  "name": "mydatabase",
-  "user": "root",
-  "password": "toor",
-  "host": "localhost",
-  "port": 3306,
-  "dialect": "mysql"
-}

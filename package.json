@@ -1,12 +1,34 @@
 {
-  "name": "microscopejs",
-  "version": "0.9.0",
-  "private": true,
-  "scripts": {
-    "start": "nodejs server"
+  "name": "microscope",
+  "version": "0.10.0",
+  "description": "Node.js MVC framework for productive web development",
+  "bin": {
+    "microscope": "./bin/microscope.js"
   },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Benjamin Heintz",
+  "license": "MIT",
   "dependencies": {
-    "express": "3.1.0",
-    "ejs": "*"
-  }
+    "inquirer": "~0.3.0",
+    "fs-extra": "~0.6.3",
+    "commander": "~2.0.0",
+    "mocha": "~1.12.0",
+    "colors": "~0.6.2",
+    "ejs": "~0.8.4"
+  },
+  "preferGlobal": true,
+  "devDependencies": {},
+  "keywords": [
+    "MVC",
+    "framework",
+    "CLI",
+    "sequelize",
+    "passport",
+    "scaffolding"
+  ]
 }

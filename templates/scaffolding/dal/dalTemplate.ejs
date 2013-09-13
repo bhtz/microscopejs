@@ -1,0 +1,84 @@
+/**
+ * module dependencies
+ */
+var DbContext = require('../../db/dbContext');
+
+/**
+* <%= model.name %>DAL class
+*/
+(function () {
+
+    /**
+     * Attributes
+     */
+    var dbContext = new DbContext();
+
+    /**
+    * Constructor.
+    */
+    function <%= model.name %>DAL() {
+		
+    }
+
+	/**
+     * get <%= model.name %> by id
+     * @param  {Integer}   <%=  model.name %>Id
+     * @param  {Function} callback
+     */
+    <%= model.name %>DAL.prototype.get = function(<%= model.name %>Id, callback) {
+        dbContext.<%= model.name %>.find(<%= model.name %>Id).success(function(<%= model.name %>) {
+            callback(<%= model.name %>);
+        });
+    };
+
+    /**
+     * get all <%= model.name %>
+     * @param  {Function} callback
+     */
+    <%= model.name %>DAL.prototype.getAll = function(callback) {
+        dbContext.<%= model.name %>.findAll({order: 'id DESC'}).success(function(<%= model.name %>s) {
+            callback(<%= model.name %>s);
+        });
+    };
+
+    /**
+     * save <%= model.name %>
+     * @param  {Object}   <%= model.name %>
+     * @param  {Function} callback
+     */
+    <%= model.name %>DAL.prototype.save = function(<%= model.name %>, callback) {
+        var <%= model.name %> = dbContext.<%= model.name %>.build(<%= model.name %>);
+        <%= model.name %>.save().success(function(<%= model.name %>) {
+            callback(<%= model.name %>);
+        }).error(function(error) {
+            callback({message: error});
+        });
+    };
+
+    /**
+     * edit a <%= model.name %>
+     * @param  {Object}   <%= model.name %>
+     * @param  {[type]}   attributes
+     * @param  {Function} callback
+     */
+    <%= model.name %>DAL.prototype.update = function(<%= model.name %>, attributes, callback){
+        <%= model.name %>.updateAttributes(attributes).success(function (updated<%= model.name %>) { 
+            callback(updated<%= model.name %>);
+        }); 
+    };
+
+    /**
+     * delete an <%= model.name %>
+     * @param  {Integer}   <%= model.name %>Id
+     * @param  {Function} callback
+     */
+    <%= model.name %>DAL.prototype.remove = function(<%= model.name %>Id, callback) {   
+        dbContext.<%= model.name %>.find(<%= model.name %>Id).success(function(<%= model.name %>) {
+			<%= model.name %>.destroy().success(function(error) {
+				callback(error);
+			});
+        })
+    };
+
+    module.exports = <%= model.name %>DAL;
+})();

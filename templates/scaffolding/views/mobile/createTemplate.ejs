@@ -1,0 +1,9 @@
+﻿<form action="/{{- model.name }}/create" method="post">
+	
+	{{ model.inputFields.forEach(function(field){ }}
+		{{- field }}
+	{{ }); }}
+
+	<br>
+	<input type="submit" value="create {{- model.name }}"/>
+</form>

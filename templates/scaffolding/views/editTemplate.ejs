@@ -1,0 +1,25 @@
+<h2 class="text-warning">edit</h2>
+
+<fieldset>
+  <legend>
+    {{- model.name }}
+  </legend>
+  <form action="/{{- model.name }}/edit/" method="post" class="form-horizontal">
+
+      <input type="hidden" value="<%- {{- model.name}}.id %>" name="id">
+	
+      {{ model.inputFields.forEach(function(field){ }}
+          <div class="control-group">
+            <label class="control-label" >Label :</label>
+            <div class="controls">
+              {{- field }}
+            </div>
+          </div>
+      {{ }); }}
+
+    <input type="submit" value="save" class="btn btn-warning"/>
+  </form>
+
+</fieldset>
+
+<a class="btn btn-primary" href="/{{- model.name }}">back to list</a>

@@ -1,0 +1,15 @@
+﻿<fieldset  data-role="controlgroup">
+  <legend>{{- model.name }}</legend>
+  <form action="/{{- model.name }}/edit/" method="post" class="form-horizontal" >
+
+      <input type="hidden" value="<%- {{- model.name}}.id %>" name="id">
+  
+      {{ model.inputFields.forEach(function(field){ }}
+          {{- field }}
+      {{ }); }}
+
+	<br>
+    <input type="submit" value="save" data-theme="b"/>
+  </form>
+
+</fieldset>

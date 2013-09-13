@@ -1,0 +1,41 @@
+/**
+* <%= model.name %>Controller class
+*/
+(function () {
+
+    /**
+    * Constructor.
+    * @param {app} - express app.
+    */
+    function <%= model.name %>Controller(app) {
+        this.routes(app);
+    }
+
+    /**
+     * Controller routes
+     * @param  {express} app
+     */
+    <%= model.name %>Controller.prototype.routes = function(app) {
+        <% if (model.actions.length) { %>
+         <% model.actions.forEach(function(action){ %>
+        app.get('/<%= model.name.toLowerCase() %>/<%= action %>', this.<%= action %>);
+         <% }) %>
+        <% } %>
+    };
+
+<% if (model.actions.length) { %>
+ <% model.actions.forEach(function(action){ %>
+    /**
+     * [HttpGet].
+     * <%= action %> action
+     * @param  {request} req
+     * @param  {response} res
+     */
+    <%= model.name %>Controller.prototype.<%= action %> = function(req, res) {
+        res.render('<%= model.name.toLowerCase() %>/<%= action %>');
+    };
+ <% }) %>
+<% } %>
+
+    module.exports = <%= model.name %>Controller;
+})();

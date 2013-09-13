@@ -1,0 +1,16 @@
+<h2 class="text-success">Create {{- model.name }}</h2>
+<form action="/{{- model.name }}/create" method="post" class="form-horizontal">
+	
+	{{ model.inputFields.forEach(function(field){ }}
+	<div class="control-group">
+		<label class="control-label" >Label :</label>
+		<div class="controls">
+			{{- field }}
+		</div>
+	</div>
+	{{ }); }}
+
+	<input type="submit" value="create {{- model.name }}" class="btn btn-success"/>
+</form>
+
+<a class="btn btn-primary" href="/{{- model.name }}">back to list</a>

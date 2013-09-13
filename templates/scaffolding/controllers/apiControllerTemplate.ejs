@@ -1,0 +1,111 @@
+/**
+* Module dependencies.
+*/
+var _<%= model.name %>DAL = require('../dal/<%= model.name %>DAL');
+
+/**
+* <%= model.name %>ApiController class
+*/
+(function () {
+
+    /**
+    * Attributes.
+    */
+    var <%= model.name %>DAL = new _<%= model.name %>DAL();
+
+    /**
+    * Constructor.
+    * @param {app} - express app.
+    */
+    function <%= model.name %>ApiController(app) {
+        this.routes(app);
+    }
+
+    /**
+    * <%= model.name %>ApiController routes.
+    * @param {app} - express app.
+    */
+    <%= model.name %>ApiController.prototype.routes = function(app) {
+        app.get('/api/<%= model.name %>', this.index);
+        app.get('/api/<%= model.name %>/:id', this.details);
+        app.post('/api/<%= model.name %>', this.create);
+        app.put('/api/<%= model.name %>', this.edit);
+        app.delete('/api/<%= model.name %>', this.delete);
+    };
+
+    /**
+    * [httpget]
+    * <%= model.name %>ApiController index action.
+    * @param {req} http request.
+    * @param {res} http response.
+    */
+    <%= model.name %>ApiController.prototype.index = function(req, res) {
+        <%= model.name %>DAL.getAll(function (<%= model.name %>s) {
+            res.send(<%= model.name %>s);
+        });
+    };
+
+    /**
+    * [httpget]
+    * <%= model.name %>ApiController details action.
+    * @param {req} http request.
+    * @param {res} http response.
+    */
+    <%= model.name %>ApiController.prototype.details = function(req, res) {
+        var <%= model.name %>Id = req.params.id;
+        <%= model.name %>DAL.get(<%= model.name %>Id, function (<%= model.name %>) {
+            if(<%= model.name %>){
+            	res.send(<%= model.name %>);
+            }
+            else{
+            	res.send(404);
+            }
+        });
+    };
+
+    /**
+    * [httppost]
+    * <%= model.name %>ApiController create post action.
+    * @param {req} http request.
+    * @param {res} http response.
+    */
+    <%= model.name %>ApiController.prototype.create = function(req, res) {
+        <%= model.name %>DAL.save(req.body, function (<%= model.name %>) {
+            res.send(<%= model.name %>);
+        });
+    };
+
+    /**
+    * [httpput]
+    * <%= model.name %>ApiController edit post action.
+    * @param {req} http request.
+    * @param {res} http response.
+    */
+    <%= model.name %>ApiController.prototype.edit = function(req, res) {
+        var attributes = req.body;
+        <%= model.name %>DAL.get(attributes.id, function(entity){
+            if(entity){
+                <%= model.name %>DAL.update(entity, attributes, function (<%= model.name %>) {
+                    res.send(<%= model.name %>);
+                });
+            }
+            else{
+                res.send(404);
+            }
+        });
+    };
+
+    /**
+    * [httpdelete]
+    * <%= model.name %>ApiController delete post action.
+    * @param {req} http request.
+    * @param {res} http response.
+    */
+    <%= model.name %>ApiController.prototype.delete = function(req, res) {
+        <%= model.name %>DAL.remove(req.body.id, function () {
+            res.send({mesage: '<%= model.name %> delete'});
+        });
+    };
+
+    module.exports = <%= model.name %>ApiController;
+})();

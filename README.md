@@ -1,11 +1,10 @@
 README
 ======
 
-What is microscope.js
----------------------
+What is microscope.js ?
+-----------------------
 
-microscopejs is a node.js MVC framework for rapid web development.
-microscopejs is currently in beta version. V1 come as soon as possible with powerfull CLI and code refactoring.
+microscopejs is a Node.js MVC framework for productive web development.
 
 Requirements
 ------------
@@ -15,9 +14,43 @@ node.js >= 0.8
 Installation
 ------------
 
-git clone https://github.com/bhtz/microscopejs.git
+sudo npm install microscope -g
+
+Getting started
+---------------
+
+Open terminal and run:
+
+	microscope
+
+Select 'new project' and set a project name.
+
+	cd project && sudo npm install
+
+Create a new mysql database.
+
+Go to ./configs/database.json and edit json database configuration file.
+
+Run again:
+
+	microscope
+
+And select: database > synchronize
+
+Run again:
+
+	microscope
+
+select: run server
+
+You're done !
 
 Documentation
 -------------
 
 www.microscopejs.com
+
+Licence
+-------
+
+microscope is released under the MIT license.

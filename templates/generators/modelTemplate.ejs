@@ -1,0 +1,11 @@
+module.exports = function (db, DataTypes) {
+
+	var <%= model.name %> = db.define('<%= model.name %>', {
+		<% if (model.properties.length) { %>
+			<% model.properties.forEach(function(property){ %>
+				<%= property.name %>: DataTypes.<%= property.type %>,
+			<% }); %>
+		<% } %>
+	});
+	return <%= model.name %>;
+}
