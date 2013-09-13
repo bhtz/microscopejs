@@ -13,7 +13,7 @@ node.js >= 0.8
 
 Installation
 ------------
-install with npm :
+install with npm (publish soon):
 
 	sudo npm install microscope -g
 
