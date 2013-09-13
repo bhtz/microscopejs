@@ -13,8 +13,13 @@ node.js >= 0.8
 
 Installation
 ------------
+install with npm :
 
-sudo npm install microscope -g
+	sudo npm install microscope -g
+
+or install bin locally :
+
+	git clone https://github.com/bhtz/microscopejs.git
 
 Getting started
 ---------------
@@ -22,6 +27,10 @@ Getting started
 Open terminal and run:
 
 	microscope
+
+or if you have installed locally :
+
+	node microscope/bin/microscope.js
 
 Select 'new project' and set a project name.
 
