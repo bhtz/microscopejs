@@ -1,13 +1,13 @@
 {
   "name": "microscope",
-  "version": "0.10.12",
+  "version": "0.10.13",
   "description": "Node.js MVC framework for productive web development",
   "bin": {
     "microscope": "./bin/microscope.js"
   },
-  "engines": [
-    "node >= 0.8.0"
-  ],
+  "engines": {
+    "node": "*"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
