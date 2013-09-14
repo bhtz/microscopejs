@@ -5,7 +5,6 @@
   "bin": {
     "microscope": "./bin/microscope.js"
   },
-  "main" : "./bin/microscope.js",
   "engines": [
     "node >= 0.8.0"
   ],
