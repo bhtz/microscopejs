@@ -1,13 +1,14 @@
 {
   "name": "microscope",
-  "version": "0.10.0",
+  "version": "0.10.12",
   "description": "Node.js MVC framework for productive web development",
   "bin": {
     "microscope": "./bin/microscope.js"
   },
-  "engines": {
-    "node": ">=0.8.0"
-  },
+  "main" : "./bin/microscope.js",
+  "engines": [
+    "node >= 0.8.0"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -30,5 +31,6 @@
     "sequelize",
     "passport",
     "scaffolding"
-  ]
+  ],
+  "repository": "https://github.com/bhtz/microscopejs"
 }
