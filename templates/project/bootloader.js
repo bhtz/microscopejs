@@ -44,17 +44,50 @@ var engine   = require('ejs-locals');
 	 * @param  {String} folderpath
 	 * @param  {express} app
 	 */
-	function loadControllerFromFolder(folderpath, app) {
-		fs.readdir(folderpath, function (err, files) {
-			if (err) { throw err; }
-			files.forEach(function (file) {
-				if (path.extname(file) === '.js') {
-					var Controller = require(folderpath + file);
-					var controller = new Controller(app);
-				}
+	var loadControllerFromFolder = function(folderpath, app) {
+		createDirectoryIfNotExist(folderpath, function(){
+			fs.readdir(folderpath, function (err, files) {
+				if (err) { throw err; }
+				files.forEach(function (file) {
+					if (path.extname(file) === '.js') {
+						var Controller = require(folderpath + file);
+						var controller = new Controller(app);
+					}
+				});
 			});
 		});
 	};
+
+	/*
+    * check if directory exist or create it asynchronously
+    */
+    var createDirectoryIfNotExist = function (name, destination, next) {
+        var path = destination + '/' + name.toLowerCase();
+        fs.exists(path, function (exists) {
+            if (exists) {
+                fs.lstat(path, function (err, stats) {
+                    if (!err) {
+                        if (stats.isDirectory()) {
+                            next();
+                        }
+                        else {
+                            fs.mkdir(path, 0777, function () {
+                                next();
+                            });
+                        }
+                    }
+                    else {
+                        console.log(err.red);
+                    }
+                });
+            }
+            else {
+                fs.mkdir(path, 0777, function () {
+                    next();
+                });
+            }
+        });
+    };
 
 	module.exports = Bootloader;
 })();
