@@ -1,18 +1,14 @@
 {
   "name": "microscope",
-  "version": "0.10.14",
+  "version": "0.10.0",
   "description": "Node.js MVC framework for productive web development",
-  "bin": {
-    "microscope": "./bin/microscope.js"
-  },
+  "bin": "./bin/microscope.js",
   "engines": {
     "node": "*"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Benjamin Heintz",
-  "license": "MIT",
   "dependencies": {
     "inquirer": "~0.3.0",
     "fs-extra": "~0.6.3",
@@ -21,7 +17,9 @@
     "colors": "~0.6.2",
     "ejs": "~0.8.4"
   },
-  "devDependencies": {},
+  "author": "Benjamin Heintz <heintz.benjamin@gmail.com> (https://github.com/bhtz)",
+  "license": "MIT",
+  "repository": "https://github.com/bhtz/microscopejs",
   "keywords": [
     "MVC",
     "framework",
@@ -29,6 +27,5 @@
     "sequelize",
     "passport",
     "scaffolding"
-  ],
-  "repository": "https://github.com/bhtz/microscopejs"
+  ]
 }
