@@ -1,6 +1,6 @@
 {
   "name": "microscope",
-  "version": "0.10.13",
+  "version": "0.10.14",
   "description": "Node.js MVC framework for productive web development",
   "bin": {
     "microscope": "./bin/microscope.js"
@@ -21,7 +21,6 @@
     "colors": "~0.6.2",
     "ejs": "~0.8.4"
   },
-  "preferGlobal": true,
   "devDependencies": {},
   "keywords": [
     "MVC",
