@@ -26,10 +26,10 @@ var _<%= model.name %>DAL = require('../dal/<%= model.name %>DAL');
     * @param {app} - express app.
     */
     <%= model.name %>ApiController.prototype.routes = function(app) {
-        app.get('/api/<%= model.name %>', this.index);
-        app.get('/api/<%= model.name %>/:id', this.details);
-        app.post('/api/<%= model.name %>', this.create);
-        app.put('/api/<%= model.name %>', this.edit);
+        app.get('/api/<%= model.name %>', this.getAll);
+        app.get('/api/<%= model.name %>/:id', this.get);
+        app.post('/api/<%= model.name %>', this.post);
+        app.put('/api/<%= model.name %>', this.put);
         app.delete('/api/<%= model.name %>', this.delete);
     };
 
@@ -39,7 +39,7 @@ var _<%= model.name %>DAL = require('../dal/<%= model.name %>DAL');
     * @param {req} http request.
     * @param {res} http response.
     */
-    <%= model.name %>ApiController.prototype.index = function(req, res) {
+    <%= model.name %>ApiController.prototype.getAll = function(req, res) {
         <%= model.name %>DAL.getAll(function (<%= model.name %>s) {
             res.send(<%= model.name %>s);
         });
@@ -51,7 +51,7 @@ var _<%= model.name %>DAL = require('../dal/<%= model.name %>DAL');
     * @param {req} http request.
     * @param {res} http response.
     */
-    <%= model.name %>ApiController.prototype.details = function(req, res) {
+    <%= model.name %>ApiController.prototype.get = function(req, res) {
         var <%= model.name %>Id = req.params.id;
         <%= model.name %>DAL.get(<%= model.name %>Id, function (<%= model.name %>) {
             if(<%= model.name %>){
@@ -69,7 +69,7 @@ var _<%= model.name %>DAL = require('../dal/<%= model.name %>DAL');
     * @param {req} http request.
     * @param {res} http response.
     */
-    <%= model.name %>ApiController.prototype.create = function(req, res) {
+    <%= model.name %>ApiController.prototype.post = function(req, res) {
         <%= model.name %>DAL.save(req.body, function (<%= model.name %>) {
             res.send(<%= model.name %>);
         });
@@ -81,7 +81,7 @@ var _<%= model.name %>DAL = require('../dal/<%= model.name %>DAL');
     * @param {req} http request.
     * @param {res} http response.
     */
-    <%= model.name %>ApiController.prototype.edit = function(req, res) {
+    <%= model.name %>ApiController.prototype.put = function(req, res) {
         var attributes = req.body;
         <%= model.name %>DAL.get(attributes.id, function(entity){
             if(entity){
