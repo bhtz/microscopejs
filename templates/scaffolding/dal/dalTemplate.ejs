@@ -74,8 +74,8 @@ var DbContext = require('../../db/dbContext');
      */
     <%= model.name %>DAL.prototype.remove = function(<%= model.name %>Id, callback) {   
         dbContext.<%= model.name %>.find(<%= model.name %>Id).success(function(<%= model.name %>) {
-			<%= model.name %>.destroy().success(function(error) {
-				callback(error);
+			<%= model.name %>.destroy().success(function() {
+				callback();
 			});
         })
     };
