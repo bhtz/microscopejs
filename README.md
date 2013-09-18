@@ -5,6 +5,9 @@ What is microscope.js ?
 -----------------------
 
 microscopejs is a Node.js MVC framework for productive web development.
+It allow you create REST API and CRUD controllers quickly with Command Line Tool.
+microscopejs is based on express.js so it's MVC design pattern.
+Because i want to build microscope with best nodejs tools, it use sequelize ORM and passport to perform authentication.
 
 Requirements
 ------------
