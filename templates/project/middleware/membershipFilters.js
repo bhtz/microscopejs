@@ -17,7 +17,13 @@ var MembershipFilters = module.exports = (function () {
     */
     MembershipFilters.prototype.authorize = function (req, res, next) {
         if (req.isAuthenticated()) { return next(); }
-        res.redirect('/account/login');
+        else{
+            if(req.xhr){
+                res.send("You're not authorize to perform this action");
+            }else{
+                res.redirect('/account/login');
+            }
+        }
     }
 
     return MembershipFilters;
