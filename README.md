@@ -25,32 +25,67 @@ Getting started
 
 Open terminal and run:
 
-	microscope
-
-Select 'new project' and set a project name.
-
-	cd project && sudo npm install
+	microscope new myprojectname
+	cd myprojectname && sudo npm install
 
 Create a new mysql database.
 
 Go to ./configs/database.json and edit json database configuration file.
 
-Run again:
+Run :
 
-	microscope
+	microscope tool
 
 And select: database > synchronize
 
-Run again:
+Run :
 
-	microscope
-
-select: run server
+	microscope server
 
 You're done !
 
 Documentation
 -------------
+
+microscope provide command line interface to build web application quicly.
+
+####Create new application:
+
+	microscope new [projectName]
+	
+####Run application :
+
+	microscope server
+
+####Generate model file :
+
+	microscope generate model [modelName] [property1]:string [property2]:text [property3]:boolean ...
+
+the properties of the models can be of the following types:
+
+string, text, boolean, date, integer, float
+
+####Generate basic controller with actions:
+
+	microscope generate controller [controllerName] [action1Name] [action2Name] ...
+
+####Scaffold CRUD controller, data access layer, model and views (mobile views in option):
+
+	microscope scaffold controller [modelName] [property1]:string [property2]:text ...
+
+add -m or --mobile in option to scaffold jQuery mobile views.
+
+####Scaffold REST API, data access layer and model:
+
+	microscope scaffold api [modelName] [property1]:string [property2]:text ...
+
+####Scaffold data access layer and model:
+
+	microscope scaffold dal [modelName] [property1]:string [property2]:text ...
+
+####Display microscope inquirer tool:
+	
+	microscope tool
 
 www.microscopejs.com (come soon)
 
