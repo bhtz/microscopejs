@@ -2,21 +2,21 @@
  * Modules dependencies
  */
 var assert = require("assert");
-var CommandLineInterface = require('../lib/commandLineInterface');
+var MicroscopeGenerator = require('../lib/microscopeGenerator');
 
 /**
  * commandLineInterface - Test.
  */
 describe('commandLineInterfaceTest', function(){
 
-  var commandLineInterface = null;
+  var microscopeGenerator = null;
 
   /**
-   * Instanciate CommandLineInterface before test
-   * @type {CommandLineInterface}
+   * Instanciate microscopeGenerator before test
+   * @type {microscopeGenerator}
    */
   beforeEach(function(done){
-      commandLineInterface = new CommandLineInterface();  
+      microscopeGenerator = new MicroscopeGenerator();  
       done();
   });
 	
