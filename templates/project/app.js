@@ -30,6 +30,7 @@ app.configure(function(){
 
     app.engine('ejs', engine);
     app.locals({_layoutFile: true});
+    require('express-helpers')(app);
 
     app.use(function (req, res, next) {
         res.locals.req = req;
