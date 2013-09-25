@@ -1,4 +1,4 @@
-<h2 class="text-error">Delete</h2>
+<h2 class="text-danger">Delete</h2>
 <fieldset>
     <legend>{{- model.name }}</legend>
     
@@ -7,12 +7,12 @@
             <p><%- {{- model.name }}.{{- property.name }} %></p>
       {{ }); }}
 
-    <form action="/{{- model.name }}/delete" method="post">
-        <input type="hidden" value="<%- {{- model.name }}.id %>" name="id" id="id">
+    <% form_for('{{- model.name }}', {controller : '/{{- model.name }}', action: '/delete'}, function(f){ %>
+        <%- f.hidden_field("id") %>
         <p>
-            <input type="submit" value="delete" class="btn btn-danger"/>
+            <%- f.submit("Delete", {class : 'btn btn-danger'}) %>
         </p>
-    </form>
+    <% }) %>
 </fieldset>
 
-<a class="btn btn-primary" href="/{{- model.name }}">back to list</a>
+<%- link_to('back to list', '/{{- model.name }}', {class : 'btn btn-primary'}) %>

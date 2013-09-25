@@ -1,7 +1,9 @@
+<% var entity = model.name.charAt(0).toUpperCase() + model.name.slice(1); %>
+
 /**
 * Module dependencies.
 */
-var _<%= model.name %>DAL = require('../dal/<%= model.name %>DAL');
+var <%= entity %>DAL = require('../dal/<%= model.name %>DAL');
 
 /**
 * <%= model.name %>Controller class
@@ -11,13 +13,13 @@ var _<%= model.name %>DAL = require('../dal/<%= model.name %>DAL');
     /**
     * Attributes.
     */
-    var <%= model.name %>DAL = new _<%= model.name %>DAL();
+    var <%= model.name %>DAL = new <%= entity %>DAL();
 
     /**
     * Constructor.
     * @param {app} - express app.
     */
-    function <%= model.name %>Controller(app) {
+    function <%= entity %>Controller(app) {
         this.routes(app);
     }
 
@@ -25,24 +27,24 @@ var _<%= model.name %>DAL = require('../dal/<%= model.name %>DAL');
     * <%= model.name %>Controller routes.
     * @param {app} - express app.
     */
-    <%= model.name %>Controller.prototype.routes = function(app) {
+    <%= entity %>Controller.prototype.routes = function(app) {
         app.get('/<%= model.name %>', this.index);
-        app.get('/<%= model.name %>/details/:id', this.details);
-        app.get('/<%= model.name %>/create', this.create);
-        app.post('/<%= model.name %>/create', this.create_post);
+        app.get('/<%= model.name %>/show/:id', this.show);
+        app.get('/<%= model.name %>/new', this.new);
+        app.post('/<%= model.name %>/create', this.create);
         app.get('/<%= model.name %>/edit/:id', this.edit);
-        app.post('/<%= model.name %>/edit', this.edit_post);
+        app.post('/<%= model.name %>/edit', this.update);
         app.get('/<%= model.name %>/delete/:id', this.delete);
-        app.post('/<%= model.name %>/delete', this.delete_post);
+        app.post('/<%= model.name %>/delete', this.destroy);
     };
 
     /**
     * [httpget]
-    * <%= model.name %>Controller index action.
+    * <%= entity %>Controller index action.
     * @param {req} http request.
     * @param {res} http response.
     */
-    <%= model.name %>Controller.prototype.index = function(req, res) {
+    <%= entity %>Controller.prototype.index = function(req, res) {
         <%= model.name %>DAL.getAll(function (<%= model.name %>s) {
             res.render('<%= model.name %>/index', { '<%= model.name %>s': <%= model.name %>s });
         });
@@ -50,24 +52,24 @@ var _<%= model.name %>DAL = require('../dal/<%= model.name %>DAL');
 
     /**
     * [httpget]
-    * <%= model.name %>Controller details action.
+    * <%= entity %>Controller details action.
     * @param {req} http request.
     * @param {res} http response.
     */
-    <%= model.name %>Controller.prototype.details = function(req, res) {
+    <%= entity %>Controller.prototype.show = function(req, res) {
         var <%= model.name %>Id = req.params.id;
         <%= model.name %>DAL.get(<%= model.name %>Id, function (<%= model.name %>) {
-            res.render('<%= model.name %>/details', { '<%= model.name %>': <%= model.name %> });
+            res.render('<%= model.name %>/show', { '<%= model.name %>': <%= model.name %> });
         });
     };
 
     /**
     * [httpget]
-    * <%= model.name %>Controller edit action.
+    * <%= entity %>Controller edit action.
     * @param {req} http request.
     * @param {res} http response.
     */
-    <%= model.name %>Controller.prototype.edit = function(req, res) {
+    <%= entity %>Controller.prototype.edit = function(req, res) {
         var <%= model.name %>Id = req.params.id;
         <%= model.name %>DAL.get(<%= model.name %>Id, function (<%= model.name %>) {
             res.render('<%= model.name %>/edit', { '<%= model.name %>': <%= model.name %> });
@@ -76,12 +78,12 @@ var _<%= model.name %>DAL = require('../dal/<%= model.name %>DAL');
 
     /**
     * [httppost]
-    * <%= model.name %>Controller edit post action.
+    * <%= entity %>Controller edit post action.
     * @param {req} http request.
     * @param {res} http response.
     */
-    <%= model.name %>Controller.prototype.edit_post = function(req, res) {
-        var attributes = req.body;
+    <%= entity %>Controller.prototype.update = function(req, res) {
+        var attributes = req.body.<%= model.name %>;
         <%= model.name %>DAL.get(attributes.id, function(entity){
             if(entity){
                 <%= model.name %>DAL.update(entity, attributes, function (<%= model.name %>) {
@@ -100,9 +102,8 @@ var _<%= model.name %>DAL = require('../dal/<%= model.name %>DAL');
     * @param {req} http request.
     * @param {res} http response.
     */
-    <%= model.name %>Controller.prototype.create = function(req, res) {
-        var <%= model.name %> = {};
-        res.render('<%= model.name %>/create', { '<%= model.name %>': <%= model.name %> });  
+    <%= entity %>Controller.prototype.new = function(req, res) {
+        res.render('<%= model.name %>/create');  
     };
 
     /**
@@ -111,19 +112,20 @@ var _<%= model.name %>DAL = require('../dal/<%= model.name %>DAL');
     * @param {req} http request.
     * @param {res} http response.
     */
-    <%= model.name %>Controller.prototype.create_post = function(req, res) {
-        <%= model.name %>DAL.save(req.body, function (data) {
+    <%= entity %>Controller.prototype.create = function(req, res) {
+        var <%= model.name %> = req.body.<%= model.name %>;
+        <%= model.name %>DAL.save(<%= model.name %>, function (data) {
             res.redirect('/<%= model.name %>');
         });
     };
 
     /**
     * [httpget]
-    * <%= model.name %>Controller delete action.
+    * <%= entity %>Controller delete action.
     * @param {req} http request.
     * @param {res} http response.
     */
-    <%= model.name %>Controller.prototype.delete = function(req, res) {
+    <%= entity %>Controller.prototype.delete = function(req, res) {
         var <%= model.name %>Id = req.params.id;
         <%= model.name %>DAL.get(<%= model.name %>Id, function (<%= model.name %>) {
             res.render('<%= model.name %>/delete', { '<%= model.name %>': <%= model.name %> });
@@ -132,15 +134,16 @@ var _<%= model.name %>DAL = require('../dal/<%= model.name %>DAL');
 
     /**
     * [httppost]
-    * <%= model.name %>Controller delete post action.
+    * <%= entity %>Controller delete post action.
     * @param {req} http request.
     * @param {res} http response.
     */
-    <%= model.name %>Controller.prototype.delete_post = function(req, res) {
-        <%= model.name %>DAL.remove(req.body.id, function (data) {
+    <%= entity %>Controller.prototype.destroy = function(req, res) {
+        var <%= model.name %> = req.body.<%= model.name %>;
+        <%= model.name %>DAL.remove(<%= model.name %>.id, function (data) {
             res.redirect('/<%= model.name %>');
         });
     };
 
-    module.exports = <%= model.name %>Controller;
+    module.exports = <%= entity %>Controller;
 })();

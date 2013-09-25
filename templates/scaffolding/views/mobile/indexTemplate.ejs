@@ -1,11 +1,11 @@
 <ul data-role="listview">
 	<% {{- model.name }}s.forEach(function({{- model.name }}){ %>
 		<li>
-			<a href="/{{- model.name }}/details/<%= {{- model.name }}.id %>">
+			<a href="/{{- model.name }}/show/<%= {{- model.name }}.id %>">
 				<h3><%- {{- model.name }}.{{- model.properties[0].name }} %></h3>
 			</a>
 		</li>
 	<% }); %>
 </ul>
 <br>
-<a href="/{{- model.name }}/create" data-role="button" data-theme="b">Create new</a>
+<a href="/{{- model.name }}/new" data-role="button" data-theme="b">Create new</a>

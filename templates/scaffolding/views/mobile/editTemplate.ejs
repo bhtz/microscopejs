@@ -1,15 +1,18 @@
 ﻿<fieldset  data-role="controlgroup">
-  <legend>{{- model.name }}</legend>
-  <form action="/{{- model.name }}/edit/" method="post" class="form-horizontal" >
+ 	<legend>{{- model.name }}</legend>
 
-      <input type="hidden" value="<%- {{- model.name}}.id %>" name="id">
-  
-      {{ model.inputFields.forEach(function(field){ }}
-          {{- field }}
-      {{ }); }}
+	<% form_for("{{- model.name }}", {controller: '/{{- model.name }}', action: '/edit'}, function(f){ %>
+	  
+	  <%- f.hidden_field("id") %>
 
-	<br>
-    <input type="submit" value="save" data-theme="b"/>
-  </form>
+	  {{ model.inputFields.forEach(function(field){ }}
+	    <div class="control-group">
+	      <%- f.label_for("{{- field.name }}", {class : "control-label"}) %>
+	      {{- field.html }}
+	    </div>
+	  {{ }); }}
+
+	  <%- f.submit("Edit", {class : 'btn btn-warning'}) %>
+	<% }) %>
 
 </fieldset>

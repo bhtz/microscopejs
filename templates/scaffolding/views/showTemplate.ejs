@@ -1,0 +1,13 @@
+<h2 class="text-info">Details</h2>
+<fieldset>
+    <legend>{{- model.name }}</legend>
+
+	{{ model.properties.forEach(function(property){ }}
+		<label for="{{- property.name }}">{{- property.name }}:</label>
+		<p><%- {{- model.name }}.{{- property.name }} %></p>
+	{{ }); }}
+
+<%- link_to('edit', '/{{- model.name }}/edit/'+{{- model.name}}.id, {class : 'btn btn-warning'}) %>
+</fieldset>
+
+<%- link_to('back to list', '/{{- model.name }}', {class : 'btn btn-primary'}) %>

@@ -1,9 +1,13 @@
-﻿<form action="/{{- model.name }}/create" method="post">
+﻿<% form_for("{{- model.name }}", {controller: '/{{- model.name }}', action: '/create'}, function(f){ %>
 	
+	<%- f.hidden_field("id") %>
+
 	{{ model.inputFields.forEach(function(field){ }}
-		{{- field }}
+	  <div class="control-group">
+	    <%- f.label_for("{{- field.name }}", {class : "control-label"}) %>
+	    {{- field.html }}
+	  </div>
 	{{ }); }}
 
-	<br>
-	<input type="submit" value="create {{- model.name }}"/>
-</form>
+	<%- f.submit("Save", {class : 'btn btn-success'}) %>
+<% }) %>

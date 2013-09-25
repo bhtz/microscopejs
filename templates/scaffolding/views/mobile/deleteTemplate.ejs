@@ -8,10 +8,10 @@
     </fieldset>
 </div>
 
-<form action="/{{- model.name }}/delete" method="post">
-    <input type="hidden" value="<%- {{- model.name }}.id %>" name="id" id="id">
+<% form_for('{{- model.name }}', {controller : '/{{- model.name }}', action: '/delete'}, function(f){ %>
+    <%- f.hidden_field("id") %>
     <p>
-        <input type="submit" value="delete"/>
+        <%- f.submit("Delete", {class : 'btn btn-danger'}) %>
     </p>
-</form>
+<% }) %>
 

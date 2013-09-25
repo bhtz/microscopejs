@@ -1,25 +1,17 @@
-<h2 class="text-warning">edit</h2>
+<h2 class="text-warning">Edit {{- model.name }}</h2>
 
-<fieldset>
-  <legend>
-    {{- model.name }}
-  </legend>
-  <form action="/{{- model.name }}/edit/" method="post" class="form-horizontal">
+<% form_for("{{- model.name }}", {controller: '/{{- model.name }}', action: '/edit'}, function(f){ %>
+  
+  <%- f.hidden_field("id") %>
 
-      <input type="hidden" value="<%- {{- model.name}}.id %>" name="id">
-	
-      {{ model.inputFields.forEach(function(field){ }}
-          <div class="control-group">
-            <label class="control-label" >Label :</label>
-            <div class="controls">
-              {{- field }}
-            </div>
-          </div>
-      {{ }); }}
+  {{ model.inputFields.forEach(function(field){ }}
+    <div class="control-group">
+      <%- f.label_for("{{- field.name }}", {class : "control-label"}) %>
+      {{- field.html }}
+    </div>
+  {{ }); }}
 
-    <input type="submit" value="save" class="btn btn-warning"/>
-  </form>
+  <%- f.submit("Edit", {class : 'btn btn-warning'}) %>
+<% }) %>
 
-</fieldset>
-
-<a class="btn btn-primary" href="/{{- model.name }}">back to list</a>
+<%- link_to('back to list', '/{{- model.name }}', {class : 'btn btn-primary'}) %>

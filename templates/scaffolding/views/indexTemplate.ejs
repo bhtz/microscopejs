@@ -18,11 +18,14 @@
                 {{ model.properties.forEach(function(property){ }}
                     <td><%- {{- model.name }}.{{- property.name }} %></td>
                 {{ }); }}
-                <td><a class="btn btn-info" href="/{{- model.name }}/details/<%= {{- model.name }}.id %>">details</a> | <a class="btn btn-warning" href="/{{- model.name }}/edit/<%= {{- model.name }}.id %>">edit</a> | <a class="btn btn-danger" href='/{{- model.name }}/delete/<%= {{- model.name }}.id %>'>delete</a>
+                <td>
+                    <%- link_to('show', '/{{- model.name }}/show/'+{{- model.name }}.id, {class : 'btn btn-info'}) %> |
+                    <%- link_to('edit', '/{{- model.name }}/edit/'+{{- model.name }}.id, {class : 'btn btn-warning'}) %> |
+                    <%- link_to('delete', '/{{- model.name }}/delete/'+{{- model.name }}.id, {class : 'btn btn-danger'}) %>
                 </td>
             </tr>
         <% }); %>
     </tbody>
 </table>
 
-<a class="btn btn-primary" href="/{{- model.name }}/create">create new</a>
+<%- link_to('new {{- model.name }}', '/{{- model.name }}/new', {class : 'btn btn-primary'}) %>

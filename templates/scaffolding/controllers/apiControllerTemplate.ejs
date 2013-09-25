@@ -1,31 +1,33 @@
+<% var entity = model.name.charAt(0).toUpperCase() + model.name.slice(1); %>
+
 /**
 * Module dependencies.
 */
-var _<%= model.name %>DAL = require('../dal/<%= model.name %>DAL');
+var <%= entity %>DAL = require('../dal/<%= model.name %>DAL');
 
 /**
-* <%= model.name %>ApiController class
+* <%= entity %>ApiController class
 */
 (function () {
 
     /**
     * Attributes.
     */
-    var <%= model.name %>DAL = new _<%= model.name %>DAL();
+    var <%= model.name %>DAL = new <%= entity %>DAL();
 
     /**
     * Constructor.
     * @param {app} - express app.
     */
-    function <%= model.name %>ApiController(app) {
+    function <%= entity %>ApiController(app) {
         this.routes(app);
     }
 
     /**
-    * <%= model.name %>ApiController routes.
+    * <%= entity %>ApiController routes.
     * @param {app} - express app.
     */
-    <%= model.name %>ApiController.prototype.routes = function(app) {
+    <%= entity %>ApiController.prototype.routes = function(app) {
         app.get('/api/<%= model.name %>', this.getAll);
         app.get('/api/<%= model.name %>/:id', this.get);
         app.post('/api/<%= model.name %>', this.post);
@@ -35,11 +37,11 @@ var _<%= model.name %>DAL = require('../dal/<%= model.name %>DAL');
 
     /**
     * [httpget]
-    * <%= model.name %>ApiController index action.
+    * <%= entity %>ApiController index action.
     * @param {req} http request.
     * @param {res} http response.
     */
-    <%= model.name %>ApiController.prototype.getAll = function(req, res) {
+    <%= entity %>ApiController.prototype.getAll = function(req, res) {
         <%= model.name %>DAL.getAll(function (<%= model.name %>s) {
             res.send(<%= model.name %>s);
         });
@@ -47,11 +49,11 @@ var _<%= model.name %>DAL = require('../dal/<%= model.name %>DAL');
 
     /**
     * [httpget]
-    * <%= model.name %>ApiController details action.
+    * <%= entity %>ApiController details action.
     * @param {req} http request.
     * @param {res} http response.
     */
-    <%= model.name %>ApiController.prototype.get = function(req, res) {
+    <%= entity %>ApiController.prototype.get = function(req, res) {
         var <%= model.name %>Id = req.params.id;
         <%= model.name %>DAL.get(<%= model.name %>Id, function (<%= model.name %>) {
             if(<%= model.name %>){
@@ -65,11 +67,11 @@ var _<%= model.name %>DAL = require('../dal/<%= model.name %>DAL');
 
     /**
     * [httppost]
-    * <%= model.name %>ApiController create post action.
+    * <%= entity %>ApiController create post action.
     * @param {req} http request.
     * @param {res} http response.
     */
-    <%= model.name %>ApiController.prototype.post = function(req, res) {
+    <%= entity %>ApiController.prototype.post = function(req, res) {
         <%= model.name %>DAL.save(req.body, function (<%= model.name %>) {
             res.send(<%= model.name %>);
         });
@@ -77,11 +79,11 @@ var _<%= model.name %>DAL = require('../dal/<%= model.name %>DAL');
 
     /**
     * [httpput]
-    * <%= model.name %>ApiController edit post action.
+    * <%= entity %>ApiController edit post action.
     * @param {req} http request.
     * @param {res} http response.
     */
-    <%= model.name %>ApiController.prototype.put = function(req, res) {
+    <%= entity %>ApiController.prototype.put = function(req, res) {
         var attributes = req.body;
         <%= model.name %>DAL.get(attributes.id, function(entity){
             if(entity){
@@ -97,15 +99,15 @@ var _<%= model.name %>DAL = require('../dal/<%= model.name %>DAL');
 
     /**
     * [httpdelete]
-    * <%= model.name %>ApiController delete post action.
+    * <%= entity %>ApiController delete post action.
     * @param {req} http request.
     * @param {res} http response.
     */
-    <%= model.name %>ApiController.prototype.delete = function(req, res) {
+    <%= entity %>ApiController.prototype.delete = function(req, res) {
         <%= model.name %>DAL.remove(req.body.id, function () {
             res.send({mesage: '<%= model.name %> delete'});
         });
     };
 
-    module.exports = <%= model.name %>ApiController;
+    module.exports = <%= entity %>ApiController;
 })();
