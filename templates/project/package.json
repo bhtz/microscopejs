@@ -15,7 +15,8 @@
     "sequelize": "1.x",
     "passport-local": "~0.1.6",
     "mysql": "~2.0.0-alpha9",
-    "express-helpers": "~1.3.1"
+    "express-helpers": "~1.3.1",
+    "cors": "~1.0.1"
   },
   "devDependencies": {
     "mocha": "~1.12.1",
