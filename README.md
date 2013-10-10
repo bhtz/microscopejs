@@ -26,7 +26,9 @@ Getting started
 Open terminal and run:
 
 	microscope new myprojectname
-	cd myprojectname && sudo npm install
+	cd myprojectname
+	sudo npm install
+	bower install
 
 Create a new mysql database.
 
@@ -86,6 +88,9 @@ add -m or --mobile in option to scaffold jQuery mobile views.
 ####Display microscope inquirer tool:
 	
 	microscope tool
+
+Website documentation
+---------------------
 
 www.microscopejs.com (come soon)
 
