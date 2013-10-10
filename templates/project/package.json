@@ -20,6 +20,11 @@
   },
   "devDependencies": {
     "mocha": "~1.12.1",
-    "stylus": "~0.35.1"
+    "stylus": "~0.35.1",
+    "grunt": "~0.4.1",
+    "grunt-contrib-stylus": "~0.8.0",
+    "grunt-contrib-uglify": "~0.2.4",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-clean": "~0.5.0"
   }
 }
