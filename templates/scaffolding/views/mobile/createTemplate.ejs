@@ -1,13 +1,21 @@
-﻿<% form_for("{{- model.name }}", {controller: '/{{- model.name }}', action: '/create'}, function(f){ %>
-	
-	<%- f.hidden_field("id") %>
+﻿<div class="panel panel-default">
+  <div class="panel-heading">Create article</div>
+  <div class="panel-body">
+	<% form_for("{{- model.name }}", {controller: '/{{- model.name }}', action: '/create'}, function(f){ %>
+		
+		<%- f.hidden_field("id") %>
 
-	{{ model.inputFields.forEach(function(field){ }}
-	  <div class="control-group">
-	    <%- f.label_for("{{- field.name }}", {class : "control-label"}) %>
-	    {{- field.html }}
-	  </div>
-	{{ }); }}
+		{{ model.inputFields.forEach(function(field){ }}
+		  <div class="control-group">
+		    <%- f.label_for("{{- field.name }}", {class : "control-label"}) %>
+		    {{- field.html }}
+		  </div>
+		{{ }); }}
 
-	<%- f.submit("Save", {class : 'btn btn-success'}) %>
-<% }) %>
+		<%- f.submit("Save", {class : 'btn btn-success', style : "width:100%;"}) %>
+	<% }) %>
+  </div>
+    <div class="panel-footer">
+  		<%- link_to('back to list', '/article', {class : 'btn btn-primary', style : "width:100%;"}) %> 
+  	</div>
+</div>

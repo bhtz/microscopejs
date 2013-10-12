@@ -1,11 +1,13 @@
-<ul data-role="listview">
-	<% {{- model.name }}s.forEach(function({{- model.name }}){ %>
-		<li>
-			<a href="/{{- model.name }}/show/<%= {{- model.name }}.id %>">
-				<h3><%- {{- model.name }}.{{- model.properties[0].name }} %></h3>
+<div class="panel panel-primary">
+    <div class="panel-heading">articles</div>
+    <div class="list-group">
+
+		<% {{- model.name }}s.forEach(function({{- model.name }}){ %>
+			<a href="/{{- model.name }}/show/<%= {{- model.name }}.id %>" class="list-group-item">
+				<%- {{- model.name }}.{{- model.properties[0].name }} %>
 			</a>
-		</li>
-	<% }); %>
-</ul>
-<br>
-<a href="/{{- model.name }}/new" data-role="button" data-theme="b">Create new</a>
+		<% }); %>
+    </div>
+</div>
+
+<a href="/{{- model.name }}/new" class="btn btn-primary" style="width:100%;">Create new</a>
