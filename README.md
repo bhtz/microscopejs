@@ -97,12 +97,11 @@ www.microscopejs.com (come soon)
 Roadmap
 -------
 
-* removing mobile file generation (useless with bootstrap 3 and responsive design).
 * updating grunt tasks (node inspector debugging, uglifying assets/scripts/ ...).
 * coffeescript project template.
 * unit testing.
 * unit testing project squeleton.
-* Single Page Application generator (backbone & angularjs).
+* microscope web tool.
 
 Licence
 -------
