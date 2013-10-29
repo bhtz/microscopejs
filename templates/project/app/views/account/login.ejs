@@ -1,17 +1,17 @@
 <form action="/account/login" method="post">
     <fieldset>
         <legend>Log in Form</legend>
-        <ol>
-            <li>
-                <label>username</label>
-                <input type="text" id="username" name="username" required/>
-            </li>
-            <li>
-                <label>password</label>
-                <input type="password" id="password" name="password" required/>
-            </li>
-        </ol>
-        <input class="btn btn-success" type="submit" value="Log in"/>
+        <div class="input text required">        
+            <label for="username">username</label>
+            <input type="text" class="input text" id="username" name="username" required="">
+        </div>
+        <div class="input password required">
+            <label for="password">password</label>
+            <input type="password" id="password" name="password" required="">
+        </div>
+        <div class="submit">
+            <input class="btn btn-success" type="submit" value="Log in">
+        </div>
     </fieldset>
 </form>
 
