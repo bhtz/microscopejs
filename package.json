@@ -1,21 +1,25 @@
 {
   "name": "microscope",
-  "version": "0.11.0",
+  "version": "0.11.1",
   "description": "Node.js MVC framework for productive web development",
   "bin": "./bin/microscope.js",
   "engines": {
     "node": "*"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt"
   },
   "dependencies": {
     "inquirer": "~0.3.0",
     "fs-extra": "~0.6.3",
     "commander": "~2.0.0",
-    "mocha": "~1.12.0",
     "colors": "~0.6.2",
     "ejs": "~0.8.4"
+  },
+  "devDependencies": {
+    "mocha": "~1.12.0",
+    "grunt": "~0.4.1",
+    "grunt-mocha-test": "~0.7.0"
   },
   "author": "Benjamin Heintz <heintz.benjamin@gmail.com> (https://github.com/bhtz)",
   "license": "MIT",

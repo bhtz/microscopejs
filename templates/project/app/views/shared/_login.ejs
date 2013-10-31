@@ -1,11 +1,11 @@
 <% if(!req.user){ %>
   
-	<li><a href="/account/login">login</a></li>
-	<li><a href="/account/register">register</a></li>
+	<li><a href="/account/login"><span class="glyphicon glyphicon-log-in"></span> login</a></li>
+	<li><a href="/account/register"> <span class="glyphicon glyphicon-saved"></span> register</a></li>
   
 <% }else { %>
   
-	<li><a href="/account/changePassword/"><%- req.user.username %></a></li>
-	<li><a href="/account/logout">logout</a></li>
+	<li><a href="/account/changePassword/"><span class="glyphicon glyphicon-user"></span> <%- req.user.username %></a></li>
+	<li><a href="/account/logout"><span class="glyphicon glyphicon-log-out"></span> logout</a></li>
 
 <% } %>

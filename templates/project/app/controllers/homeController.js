@@ -19,7 +19,6 @@
         app.get('/', this.index);
         app.get('/home', this.index);
         app.get('/home/index', this.index);
-        app.get('/home/docs', this.docs);
     };
 
     /**
@@ -30,16 +29,6 @@
      */
     HomeController.prototype.index = function(req, res) {
         res.render('home/index');
-    };
-
-    /**
-     * [HttpGet].
-     * docs action
-     * @param  {request} req
-     * @param  {response} res
-     */
-    HomeController.prototype.docs = function(req, res) {
-        res.render('home/docs');
     };
 
     module.exports = HomeController;
