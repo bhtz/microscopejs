@@ -97,11 +97,9 @@ www.microscopejs.com (come soon)
 Roadmap
 -------
 
-* updating grunt tasks (node inspector debugging, uglifying assets/scripts/ ...).
-* coffeescript project template.
-* unit testing.
-* unit testing project squeleton.
-* microscope web tool.
+You can follow microscope development trello board here:
+
+[microscopejs trello board](https://trello.com/b/wuNvfCiH/microscopejs)
 
 Licence
 -------
