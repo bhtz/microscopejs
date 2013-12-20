@@ -4,3 +4,6 @@
 .form-update-password {
   margin: 35px 20px 20px 20px;
 }
+label[for=confirmNewPassword] {
+	padding-top: 0 !important;
+}
