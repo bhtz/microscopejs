@@ -7,7 +7,6 @@
 
     /**
     * Constructor.
-    * Add your entities 'DbSet' instance here like user.
     */
     function DbContext() {
         this.db = require('./dbConnection');
