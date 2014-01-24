@@ -25,8 +25,8 @@ Getting started
 
 Open terminal and run:
 
-	microscope new myprojectname
-	cd myprojectname
+	microscope new [myprojectname]
+	cd [myprojectname]
 	sudo npm install
 	bower install
 
@@ -40,9 +40,17 @@ Run :
 
 And select: database > synchronize
 
-Run :
+Run server with :
 
 	microscope server
+
+For development use grunt tasks:
+
+	grunt debug
+
+* run application with nodemon.
+* watch assets files changes.
+* run default web browser.
 
 You're done !
 
