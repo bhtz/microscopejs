@@ -4,23 +4,30 @@ README
 What is this project ?
 ----------------------
 
-edit this !
+microscope application.
 
 Requirements
 ------------
 
 node.js >= 0.8
-edit this
+grunt-cli
+npm
+bower
 
 Installation
 ------------
+Run the following commands:
 
-edit this !
+	sudo npm install
+	bower install
+	grunt build
 
 Getting started
 ---------------
 
-edit this !
+Run the following commands:
+
+	microscope server
 
 Documentation
 -------------
