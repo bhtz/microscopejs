@@ -92,7 +92,7 @@ var UserDal           = require('../dal/userDal');
             });
         }
         else {
-            req.flash('flash', 'password must be 6 length or confirmPassword error !');
+            req.flash('flash', 'Password must be 6 length or confirmPassword error !');
             res.redirect('/account/register');
         }
     };
@@ -123,6 +123,9 @@ var UserDal           = require('../dal/userDal');
                     }
                 });
             });
+        } else {
+            req.flash('flash', 'Password must be 6 length or confirmPassword error !');
+            res.redirect('/account/changePassword');
         }
     };
       
