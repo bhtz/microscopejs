@@ -1,6 +1,6 @@
 {
   "name": "microscope",
-  "version": "0.11.4",
+  "version": "0.12.0",
   "description": "Node.js MVC framework for productive web development",
   "bin": "./bin/microscope.js",
   "engines": {
