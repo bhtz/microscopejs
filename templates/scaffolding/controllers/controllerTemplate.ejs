@@ -4,6 +4,7 @@
 * Module dependencies.
 */
 var <%= entity %>DAL = require('../dal/<%= model.name %>DAL');
+var logger      = require('../../configs/logger.js');
 
 /**
 * <%= model.name %>Controller class
@@ -45,6 +46,7 @@ var <%= entity %>DAL = require('../dal/<%= model.name %>DAL');
     * @param {res} http response.
     */
     <%= entity %>Controller.prototype.index = function(req, res) {
+        logger.LOG.info("<%= entity %> Controller - Show All");
         <%= model.name %>DAL.getAll(function (<%= model.name %>s) {
             res.render('<%= model.name %>/index', { '<%= model.name %>s': <%= model.name %>s });
         });
