@@ -3,7 +3,7 @@
 */
 var passport          = require('passport');
 var bcrypt            = require('bcrypt-nodejs');
-var logger      = require('../../configs/logger.js');
+var logger            = require('../../configs/logger.js');
 var MembershipFilters = require('../../middleware/membershipFilters');
 var UserDal           = require('../dal/userDal');
 
