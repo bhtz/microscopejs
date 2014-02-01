@@ -1,8 +1,6 @@
 /**
 * homeController class
 */
-var logger      = require('../../configs/logger.js');
-
 (function () {
 
     /**
@@ -30,7 +28,6 @@ var logger      = require('../../configs/logger.js');
      * @param  {response} res
      */
     HomeController.prototype.index = function(req, res) {
-        logger.LOG.info("Index Controller - Show Index Page");
         res.render('home/index');
     };
 
