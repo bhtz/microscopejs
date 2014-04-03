@@ -79,6 +79,17 @@ app.configure('production', function () {
 });
 app.use(require('./middleware/errorHandler')(errorOptions));
 
+/*
+ * Adding log4js logger middleware.
+ */
+var log4js = require('log4js');
+log4js.configure('./configs/logger.json', {});
+var logger = log4js.getLogger('file');
+logger.setLevel('ERROR');
+app.configure(function() {
+    app.use(log4js.connectLogger(logger));
+});
+
 /**
  * Run server.
  */
