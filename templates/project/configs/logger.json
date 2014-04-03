@@ -1,0 +1,16 @@
+{
+  "appenders": [
+  	{ 
+  		"type": "console",
+  		"category": "console"
+  	},
+    {
+      "type": "file",
+      "filename": "./logs/trace.log",
+      "maxLogSize": 20480,
+      "backups": 3,
+      "category": "file"
+    }
+  ],
+  "replaceConsole": true
+}

@@ -10,7 +10,8 @@ var dbConfig = require("../configs/database.json");
 var db = new Sequelize(dbConfig.name, dbConfig.user, dbConfig.password, {
 	host: dbConfig.host,
 	port: dbConfig.port,
-	dialect: dbConfig.dialect
+	dialect: dbConfig.dialect,
+	storage: dbConfig.storage
 });
 
 module.exports = db;
