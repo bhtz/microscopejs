@@ -11,8 +11,8 @@ module.exports = function(grunt) {
 		watch      : require('./grunt_tasks/watch'),
 		nodemon    : require('./grunt_tasks/nodemon'),
 		concurrent : require('./grunt_tasks/concurrent'),
-		open       : require('./grunt_tasks/open')
-
+		open       : require('./grunt_tasks/open'),
+		docco      : require('./grunt_tasks/docco'),
 	});
 
 	// load tasks
@@ -24,11 +24,14 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-concurrent');
 	grunt.loadNpmTasks('grunt-open');
 	grunt.loadNpmTasks('grunt-nodemon');
+	grunt.loadNpmTasks('grunt-docco2');
 
 	// Default task(s).
 	grunt.registerTask('default', ['build']);
 
-	grunt.registerTask('build', ['clean', 'copy:vendors', 'copy:scripts', 'copy:images', 'stylus:dev']);
+	grunt.registerTask('docs', ['clean', 'docco']);
+
+	grunt.registerTask('build', ['docs', 'copy:vendors', 'copy:scripts', 'copy:images', 'stylus:dev']);
 	grunt.registerTask('build:release', ['clean', 'copy:release', 'stylus:release']);
 
 	grunt.registerTask('debug', ['build', 'concurrent:debug']);
