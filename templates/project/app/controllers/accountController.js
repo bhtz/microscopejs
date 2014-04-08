@@ -3,7 +3,8 @@
 */
 var passport          = require('passport');
 var bcrypt            = require('bcrypt-nodejs');
-var MembershipFilters = require('../../middleware/membershipFilters');
+var membershipFilters = require('../filters/membershipFilters');
+var csrfFilters       = require('../filters/csrfFilters');
 var UserDal           = require('../dal/userDal');
 
 /**
@@ -15,7 +16,6 @@ var UserDal           = require('../dal/userDal');
     * Attributes.
     */
     var userDal = new UserDal();
-    var filters = new MembershipFilters();
 
     /**
     * Constructor.
@@ -29,14 +29,16 @@ var UserDal           = require('../dal/userDal');
     * AccountController routes.
     */
     AccountController.prototype.routes = function(app) {
-        app.get('/account/login', this.login);
+        app.all('/account/*', csrfFilters.csrf);
+
+        app.get('/account/login', csrfFilters.antiForgeryToken, this.login);
         app.post('/account/login',
             passport.authenticate('local', { successRedirect: '/', failureRedirect: '/account/login'}), 
             this.redirectHome);
         app.get('/account/logout', this.logout);
-        app.get('/account/changePassword', filters.authorize, this.changePassword);
-        app.post('/account/changePassword', filters.authorize, this.changePassword_post);
-        app.get('/account/register', this.register);
+        app.get('/account/changePassword', membershipFilters.authorize, csrfFilters.antiForgeryToken, this.changePassword);
+        app.post('/account/changePassword', membershipFilters.authorize, this.changePassword_post);
+        app.get('/account/register', csrfFilters.antiForgeryToken, this.register);
         app.post('/account/register', this.register_post);
     };
 

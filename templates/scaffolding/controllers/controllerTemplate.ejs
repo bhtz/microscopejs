@@ -4,6 +4,7 @@
 * Module dependencies.
 */
 var <%= entity %>DAL = require('../dal/<%= model.name %>DAL');
+var csrfFilters = require('../filters/csrfFilters');
 
 /**
 * <%= model.name %>Controller class
@@ -28,13 +29,15 @@ var <%= entity %>DAL = require('../dal/<%= model.name %>DAL');
     * @param {app} - express app.
     */
     <%= entity %>Controller.prototype.routes = function(app) {
+        app.all('/<%= model.name %>/*', csrfFilters.csrf);
+
         app.get('/<%= model.name %>', this.index);
         app.get('/<%= model.name %>/show/:id', this.show);
-        app.get('/<%= model.name %>/new', this.new);
+        app.get('/<%= model.name %>/new', csrfFilters.antiForgeryToken, this.new);
         app.post('/<%= model.name %>/create', this.create);
-        app.get('/<%= model.name %>/edit/:id', this.edit);
+        app.get('/<%= model.name %>/edit/:id', csrfFilters.antiForgeryToken, this.edit);
         app.post('/<%= model.name %>/edit', this.update);
-        app.get('/<%= model.name %>/delete/:id', this.delete);
+        app.get('/<%= model.name %>/delete/:id', csrfFilters.antiForgeryToken, this.delete);
         app.post('/<%= model.name %>/delete', this.destroy);
     };
 

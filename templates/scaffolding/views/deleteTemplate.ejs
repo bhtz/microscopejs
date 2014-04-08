@@ -9,6 +9,8 @@
 
     <% form_for('{{- model.name }}', {controller : '/{{- model.name }}', action: '/delete'}, function(f){ %>
         <%- f.hidden_field("id") %>
+        <%- hidden_field_tag("_csrf", {value: token}) %>
+        
         <p>
             <%- f.submit("Delete", {class : 'btn btn-danger'}) %>
         </p>

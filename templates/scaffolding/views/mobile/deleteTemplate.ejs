@@ -13,6 +13,8 @@
             <div class="col-xs-6 col-sm-6">
                 <% form_for('{{- model.name }}', {controller : '/{{- model.name }}', action: '/delete'}, function(f){ %>
                     <%- f.hidden_field("id") %>
+                    <%- hidden_field_tag("_csrf", {value: token}) %>
+                    
                     <p>
                         <%- f.submit("Delete", {class : 'btn btn-danger', style : "width:100%;"}) %>
                     </p>
