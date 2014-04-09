@@ -1,5 +1,5 @@
 /**
- * Module dependencies.
+ * Imports
  */
 var express       = require('express');
 var http          = require('http');
@@ -13,86 +13,103 @@ var passport      = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var Membership    = require('./middleware/membership');
 
-var app = express();
-var membership = new Membership(passport, LocalStrategy);
-
 /**
- * main application configuration.
+ * Application class.
  */
-app.configure(function(){
-    app.set('port', process.env.PORT || 3000);
-    app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
-    app.use(express.static(path.join(__dirname, 'public')));
+var Application = (function(){
 
-    app.set('views', __dirname + '/app/views/');  
-    app.set('view engine', 'ejs');
-    app.set('layout', 'layout');
+    /**
+    * Constructor.
+    */
+    function Application(){
+        this.app = express();
+        this.configurations();
+        this.registerMiddleware();
+        this.boot();
+        this.run();
+    };
 
-    app.engine('ejs', engine);
-    app.locals({_layoutFile: true});
-    require('express-helpers')(app);
+    /**
+     * Define application express configurations
+     */
+    Application.prototype.configurations = function() {
+        this.app.set('port', process.env.PORT || 3000);
+        this.app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
+        this.app.use(express.static(path.join(__dirname, 'public')));
 
-    app.use(function (req, res, next) {
-        res.locals.req = req;
-        next();
-    });
-    
-    app.use(function(req, res, next){
-        res.locals.path = url.parse(req.url).pathname;
-        next();
-    });
+        this.app.set('views', __dirname + '/app/views/');  
+        this.app.set('view engine', 'ejs');
+        this.app.set('layout', 'layout');
 
-    app.use(express.logger('dev'));
-    app.use(express.cookieParser());
-    app.use(express.bodyParser());
-    app.use(express.methodOverride());
-    app.use(express.session({ secret: 'microscopejsbhtz' }));
-    app.use(express.errorHandler());
+        this.app.engine('ejs', engine);
+        this.app.locals({_layoutFile: true});
+        require('express-helpers')(this.app);
+    };
 
-    app.use(require('./middleware/deviceHandler'));
-    app.use(passport.initialize());
-    app.use(passport.session());
+    /**
+    * Register application middleware.
+    */
+    Application.prototype.registerMiddleware = function() {
+        this.app.use(function (req, res, next) {
+            res.locals.req = req;
+            next();
+        });
+        
+        this.app.use(function(req, res, next){
+            res.locals.path = url.parse(req.url).pathname;
+            next();
+        });
 
-    app.use(flash());
-    app.use(function(req, res, next){
-        res.locals.flash = req.flash('flash');
-        next();
-    });
-    app.use(app.router);
-});
+        this.app.use(express.logger('dev'));
+        this.app.use(express.cookieParser());
+        this.app.use(express.bodyParser());
+        this.app.use(express.methodOverride());
+        this.app.use(express.session({ secret: 'microscopejsbhtz' }));
+        this.app.use(express.errorHandler());
 
-/**
- * boot application with all modules.
- */
-var bootloader = new Bootloader(app);
+        this.app.use(require('./middleware/deviceHandler'));
+        this.app.use(passport.initialize());
+        this.app.use(passport.session());
 
-/**
-* ERROR MANAGEMENT
-* -------------------------------------------------------------------------------------------------
-* error management - instead of using standard express / connect error management, we are going
-* to show a custom 404 / 500 error using ejs and the middleware errorHandler (see ./middleware/errorHandler.js)
-**/
-var errorOptions = { dumpExceptions: true, showStack: true }
-app.configure('development', function () { });
-app.configure('production', function () {
-    errorOptions = {};
-});
-app.use(require('./middleware/errorHandler')(errorOptions));
+        this.app.use(flash());
+        this.app.use(function(req, res, next){
+            res.locals.flash = req.flash('flash');
+            next();
+        });
 
-/*
- * Adding log4js logger middleware.
- */
-var log4js = require('log4js');
-log4js.configure('./configs/logger.json', {});
-var logger = log4js.getLogger('file');
-logger.setLevel('ERROR');
-app.configure(function() {
-    app.use(log4js.connectLogger(logger));
-});
+        this.app.configure('development', function () { });
+        this.app.configure('production', function () {
+            errorOptions = {};
+        });
+        this.app.use(require('./middleware/errorHandler')({ dumpExceptions: true, showStack: true }));
 
-/**
- * Run server.
- */
-var server = http.createServer(app).listen(app.get('port'), function(){
-    console.log("\n microscope server listening on port " + app.get('port'));
-});
+        var log4js = require('log4js');
+        log4js.configure('./configs/logger.json', {});
+        var logger = log4js.getLogger('file');
+        logger.setLevel('INFO');
+        this.app.use(log4js.connectLogger(logger));
+
+        this.app.use(this.app.router);
+    };
+
+    /**
+     * Boot application controller & api
+     */
+    Application.prototype.boot = function() {
+        var bootloader = new Bootloader(this.app);
+    };
+
+    /**
+     * run application
+     */
+    Application.prototype.run = function() {
+        var self = this;
+        var server = http.createServer(this.app).listen(this.app.get('port'), function(){
+            console.log("\n microscope server listening on port " + self.app.get('port'));
+        });
+    };
+
+    return Application;
+})();
+
+var application = new Application();
