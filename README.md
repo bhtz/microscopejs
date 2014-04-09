@@ -9,6 +9,13 @@ It allow you create REST API and CRUD controllers quickly with Command Line Tool
 microscopejs is based on express.js so it's MVC design pattern.
 Because i want to build microscope with best nodejs tools, it use sequelize ORM and passport to perform authentication.
 
+Roadmap
+-------
+
+You can follow microscope development trello board here:
+
+[microscopejs trello board](https://trello.com/b/wuNvfCiH/microscopejs)
+
 Requirements
 ------------
 
@@ -100,14 +107,7 @@ add -m or --mobile in option to scaffold jQuery mobile views.
 Website documentation
 ---------------------
 
-www.microscopejs.com (come soon)
-
-Roadmap
--------
-
-You can follow microscope development trello board here:
-
-[microscopejs trello board](https://trello.com/b/wuNvfCiH/microscopejs)
+[microscopejs.com](http://www.microscopejs.com/)
 
 Licence
 -------
