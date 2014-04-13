@@ -50,6 +50,8 @@ var Application = (function(){
     * Register application middleware.
     */
     Application.prototype.registerMiddleware = function() {
+        var membership = new Membership(passport, LocalStrategy);
+        
         this.app.use(function (req, res, next) {
             res.locals.req = req;
             next();
