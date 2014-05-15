@@ -29,7 +29,7 @@ var csrfFilters = require('../filters/csrfFilters');
     * @param {app} - express app.
     */
     <%= entity %>Controller.prototype.routes = function(app) {
-        app.all('/<%= model.name %>/*', csrfFilters.csrf);
+        app.all('/<%= model.name %>*', csrfFilters.csrf);
 
         app.get('/<%= model.name %>', this.index);
         app.get('/<%= model.name %>/show/:id', this.show);

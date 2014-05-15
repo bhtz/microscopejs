@@ -33,8 +33,7 @@ var UserDal           = require('../dal/userDal');
 
         app.get('/account/login', csrfFilters.antiForgeryToken, this.login);
         app.post('/account/login',
-            passport.authenticate('local', { successRedirect: '/', failureRedirect: '/account/login'}), 
-            this.redirectHome);
+            passport.authenticate('local', { failureRedirect: '/account/login'}), this.redirectURL);
         app.get('/account/logout', this.logout);
         app.get('/account/changePassword', membershipFilters.authorize, csrfFilters.antiForgeryToken, this.changePassword);
         app.post('/account/changePassword', membershipFilters.authorize, this.changePassword_post);
@@ -130,13 +129,17 @@ var UserDal           = require('../dal/userDal');
             res.redirect('/account/changePassword');
         }
     };
-      
-    /**
-    * Redirect to home.
+
+    /*
+    * Redirect URL login
     */
-    AccountController.prototype.redirectHome = function(req, res) {
-        res.redirect('/');
-    };
+    AccountController.prototype.redirectURL = function(req, res){
+        var url = '/';
+        if(req.query.returnUrl){
+            url = req.query.returnUrl;
+        }
+        res.redirect(url);
+    }
 
     /**
      * encrypted password

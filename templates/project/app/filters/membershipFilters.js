@@ -1,19 +1,18 @@
 /**
 * authorize users filters
 */
-var authorize = function (req, res, next) {
+exports.authorize = function (req, res, next) {
     if (req.isAuthenticated()) {
+        console.log('user isAuthenticated');
         return next();
     }
     else {
+        console.log('user not isAuthenticated');
         if(req.xhr){
             res.send("You're not authorize to perform this action");
         }else{
-            res.redirect('/account/login');
+            var url = req.url;
+            res.redirect('/account/login?returnUrl='+url);
         }
     }
-};
-
-module.exports = {
-    authorize: authorize
 };

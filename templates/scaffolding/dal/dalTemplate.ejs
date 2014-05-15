@@ -47,6 +47,11 @@ var DbContext = require('../../db/dbContext');
      * @param  {Function} callback
      */
     <%= model.name %>DAL.prototype.save = function(<%= model.name %>, callback) {
+       <% for (var i = 0; i < model.properties.length; i++) { %>
+            <% if(model.properties[i].type === "BOOLEAN"){ %>
+                <%- model.name %>.<%- model.properties[i].name %> = ( <%- model.name %>.<%- model.properties[i].name %> == 1 ) ? true : false;
+            <% } %>
+        <% };%>
         var <%= model.name %> = dbContext.<%= model.name %>.build(<%= model.name %>);
         <%= model.name %>.save().success(function(<%= model.name %>) {
             callback(<%= model.name %>);
@@ -62,6 +67,11 @@ var DbContext = require('../../db/dbContext');
      * @param  {Function} callback
      */
     <%= model.name %>DAL.prototype.update = function(<%= model.name %>, attributes, callback){
+       <% for (var i = 0; i < model.properties.length; i++) { %>
+            <% if(model.properties[i].type === "BOOLEAN"){ %>
+                attributes.<%- model.properties[i].name %> = ( attributes.<%- model.properties[i].name %> == 1 ) ? true : false;
+            <% } %>
+        <% };%>
         <%= model.name %>.updateAttributes(attributes).success(function (updated<%= model.name %>) { 
             callback(updated<%= model.name %>);
         }); 
